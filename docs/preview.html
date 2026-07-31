@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Caffeinate visual fixture</title>
+    <link rel="stylesheet" href="../src/styles.css" />
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell" id="fixture-shell">
+      <header class="app-header">
+        <div>
+          <p class="product-name">Caffeinate</p>
+          <p class="product-note">Local macOS utility</p>
+        </div>
+        <div class="privacy-note">
+          <span aria-hidden="true" class="privacy-mark"></span>
+          No network
+        </div>
+      </header>
+
+      <main>
+        <section class="state-field" aria-live="polite" aria-atomic="true">
+          <div class="status-line">
+            <span class="status-signal" aria-hidden="true"></span>
+            <span id="fixture-status">Ready</span>
+          </div>
+          <h1 id="fixture-heading">Sleep is allowed.</h1>
+          <p class="state-detail" id="fixture-detail">Start a session before a long task.</p>
+        </section>
+
+        <button class="primary-action" type="button">
+          <svg aria-hidden="true" class="power-glyph" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+            <path d="M7.2 5.9a8 8 0 1 0 9.6 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+            <circle id="fixture-dot" cx="12" cy="12" r="1.4" fill="currentColor" hidden></circle>
+          </svg>
+          <span id="fixture-action">Keep Mac Awake</span>
+          <kbd>⌘↵</kbd>
+        </button>
+
+        <section class="controls" aria-label="Caffeinate settings">
+          <div class="control-row">
+            <div class="control-copy">
+              <label for="fixture-duration">Duration</label>
+              <span>Stop automatically, or keep running until you stop it.</span>
+            </div>
+            <select id="fixture-duration">
+              <option>Until stopped</option>
+              <option>30 minutes</option>
+              <option>1 hour</option>
+              <option>2 hours</option>
+              <option>4 hours</option>
+            </select>
+          </div>
+
+          <div class="control-row">
+            <div class="control-copy">
+              <label for="fixture-display">Keep display on</label>
+              <span>Also prevent the screen from turning off.</span>
+            </div>
+            <label class="switch" for="fixture-display">
+              <input id="fixture-display" type="checkbox" />
+              <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
+            </label>
+          </div>
+        </section>
+      </main>
+
+      <footer class="technical-footer">
+        <span>Command</span>
+        <code id="fixture-command">/usr/bin/caffeinate -i -w &lt;app-pid&gt;</code>
+      </footer>
+    </div>
+
+    <script>
+      const active = new URLSearchParams(window.location.search).get("active") === "1";
+      if (active) {
+        document.getElementById("fixture-shell").classList.add("is-active");
+        document.getElementById("fixture-status").textContent = "Awake";
+        document.getElementById("fixture-heading").textContent = "Idle sleep is blocked.";
+        document.getElementById("fixture-detail").textContent =
+          "The system stays awake while the display may turn off. Until you stop it.";
+        document.getElementById("fixture-action").textContent = "Allow Sleep";
+        document.getElementById("fixture-dot").hidden = false;
+        document.getElementById("fixture-duration").disabled = true;
+        document.getElementById("fixture-display").disabled = true;
+      }
+    </script>
+  </body>
+</html>

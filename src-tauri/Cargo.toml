@@ -1,0 +1,19 @@
+[package]
+name = "caffeinate-app"
+version = "1.0.0"
+description = "A small macOS utility for controlling the built-in caffeinate command"
+authors = ["Aung Myo Kyaw"]
+edition = "2021"
+rust-version = "1.77.2"
+license = "MIT"
+
+[lib]
+name = "caffeinate_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+tauri = { version = "2", features = [] }
