@@ -42,7 +42,8 @@
     "shortDescription": "Keep your Mac awake with the built-in caffeinate command.",
     "longDescription": "A small local macOS utility that starts and owns the built-in caffeinate command, with optional display and duration controls.",
     "macOS": {
-      "minimumSystemVersion": "12.0"
+      "minimumSystemVersion": "12.0",
+      "signingIdentity": "-"
     }
   }
 }

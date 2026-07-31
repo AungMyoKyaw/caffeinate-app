@@ -4,7 +4,6 @@ A focused Tauri desktop utility that keeps a Mac awake by owning the built-in `/
 
 ![Caffeinate ready state](docs/screenshots/caffeinate-ready.png)
 ![Caffeinate active state](docs/screenshots/caffeinate-active.png)
-![Caffeinate compact state](docs/screenshots/caffeinate-compact.png)
 
 ## What it does
 
@@ -69,18 +68,22 @@ bun run check
 
 ## Build the macOS application
 
+Builds a universal binary (Intel + Apple Silicon) with an ad-hoc signature:
+
 ```bash
-bun tauri build --bundles app,dmg
+bun tauri build --bundles app,dmg --target universal-apple-darwin
 ```
 
-Expected unsigned outputs:
+To build for the host architecture only, drop `--target universal-apple-darwin`.
+
+Expected outputs:
 
 ```text
-src-tauri/target/release/bundle/macos/Caffeinate.app
-src-tauri/target/release/bundle/dmg/Caffeinate_1.0.0_*.dmg
+src-tauri/target/universal-apple-darwin/release/bundle/macos/Caffeinate.app
+src-tauri/target/universal-apple-darwin/release/bundle/dmg/Caffeinate_1.0.0_*.dmg
 ```
 
-Code signing and notarization are intentionally not configured. Add your Apple Developer identity and CI secrets before distributing outside your own Mac.
+Signing is ad-hoc (`signingIdentity: "-"`): the app runs locally on any Mac but is not notarized. Add your Apple Developer identity and CI secrets before distributing outside your own Mac.
 
 ## Process model
 

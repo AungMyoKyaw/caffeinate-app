@@ -30,6 +30,8 @@ const readme = required("README.md");
 expect(packageJson, /"packageManager"\s*:\s*"bun@/, "packageManager must pin Bun");
 expect(packageJson, /"tauri:dev"\s*:\s*"bun tauri dev"/, "development must invoke Tauri through Bun");
 expect(packageJson, /"tauri:build"\s*:\s*"bun tauri build/, "build must invoke Tauri through Bun");
+expect(packageJson, /universal-apple-darwin/, "build must produce a universal macOS binary");
+expect(tauriConfig, /"signingIdentity"\s*:\s*"-"/, "macOS app must be ad-hoc signed");
 expect(cargo, /tauri\s*=\s*\{?[^\n]*version\s*=\s*"2/, "Cargo must use Tauri 2");
 expect(tauriConfig, /"targets"\s*:\s*\[\s*"app"\s*,\s*"dmg"\s*\]/s, "bundle targets must be app and dmg");
 expect(tauriConfig, /"identifier"\s*:\s*"ai\.learningflow\.caffeinate"/, "bundle identifier is missing");

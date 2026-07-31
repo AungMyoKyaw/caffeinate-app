@@ -18,6 +18,7 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy,rustfmt
+          targets: aarch64-apple-darwin,x86_64-apple-darwin
 
       - uses: Swatinem/rust-cache@v2
         with:
@@ -45,4 +46,21 @@ jobs:
         run: cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings
 
       - name: Tauri application build
-        run: bun tauri build --bundles app
+        run: bun tauri build --bundles app,dmg --target universal-apple-darwin
+
+      - name: Verify ad-hoc signature and universal binary
+        run: |
+          APP="src-tauri/target/universal-apple-darwin/release/bundle/macos/Caffeinate.app"
+          codesign -dv --verbose=2 "$APP" 2>&1 | grep "Signature=adhoc"
+          BINARY=$(ls "$APP/Contents/MacOS/"*)
+          lipo -info "$BINARY" | grep -q "x86_64 arm64" && echo "Universal binary OK"
+          ditto -c -k --sequesterRsrc --keepParent "$APP" Caffeinate.app.zip
+
+      - name: Upload macOS app bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: Caffeinate-universal-macos
+          path: |
+            Caffeinate.app.zip
+            src-tauri/target/universal-apple-darwin/release/bundle/dmg/*.dmg
+          if-no-files-found: error
