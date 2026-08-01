@@ -107,4 +107,4 @@ Rust owns the child handle, polls `try_wait`, kills it on Stop, and calls cleanu
 
 ## License
 
-MIT
+MIT © [Aung Myo Kyaw](https://github.com/AungMyoKyaw)
