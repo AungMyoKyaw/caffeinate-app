@@ -92,7 +92,9 @@ impl CaffeinateController {
                         .map_err(|error| format!("Could not finish caffeinate cleanup: {error}"))?;
                 }
                 Err(error) => {
-                    return Err(format!("Could not inspect caffeinate before stopping: {error}"));
+                    return Err(format!(
+                        "Could not inspect caffeinate before stopping: {error}"
+                    ));
                 }
             }
         }
@@ -187,9 +189,7 @@ fn reconcile_session(session: &mut Option<CaffeinateSession>) -> Result<(), Stri
     Ok(())
 }
 
-fn status_from_session(
-    session: Option<&CaffeinateSession>,
-) -> Result<CaffeinateStatus, String> {
+fn status_from_session(session: Option<&CaffeinateSession>) -> Result<CaffeinateStatus, String> {
     let Some(session) = session else {
         return Ok(inactive_status());
     };

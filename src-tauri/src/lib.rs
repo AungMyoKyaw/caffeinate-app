@@ -1,8 +1,6 @@
 mod caffeinate;
 
-use caffeinate::{
-    get_caffeinate_status, start_caffeinate, stop_caffeinate, CaffeinateController,
-};
+use caffeinate::{get_caffeinate_status, start_caffeinate, stop_caffeinate, CaffeinateController};
 use tauri::{Manager, RunEvent};
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
