@@ -52,6 +52,20 @@ bun tauri dev
 
 The first `bun install` creates `bun.lock`. Commit that lockfile before publishing a release from your own environment.
 
+## Install
+
+**Homebrew (recommended):**
+
+```bash
+brew install --cask AungMyoKyaw/homebrew-tap/caffeinate
+```
+
+The cask installs the current release from the latest GitHub release and clears the quarantine attribute after installation.
+
+**Direct download:**
+
+Grab the latest DMG from the [GitHub Releases](https://github.com/AungMyoKyaw/caffeinate-app/releases) page, or the [product website](https://aungmyokyaw.github.io/caffeinate-app/). Open it and drag Caffeinate into Applications.
+
 ## Tests and checks
 
 ```bash

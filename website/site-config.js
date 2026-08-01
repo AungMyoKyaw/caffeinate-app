@@ -3,7 +3,7 @@ window.CAFFEINATE_SITE = Object.freeze({
   minimumMacOS: "macOS 12 or later",
   dmgUrl: "https://github.com/AungMyoKyaw/caffeinate-app/releases/latest/download/Caffeinate_1.0.0_universal.dmg",
   brew: Object.freeze({
-    available: false,
-    command: "brew install --cask caffeinate"
+    available: true,
+    command: "brew install --cask AungMyoKyaw/homebrew-tap/caffeinate"
   })
 });

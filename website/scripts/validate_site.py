@@ -72,8 +72,10 @@ for name, marker in js_markers.items():
     if marker not in js:
         errors.append(f"missing JavaScript contract marker: {name}")
 
-if 'available: false' not in config:
-    errors.append("Homebrew must default to unavailable until publishing finishes")
+if 'available: true' not in config:
+    errors.append("Homebrew must be marked available once the cask is published")
+if "AungMyoKyaw/homebrew-tap/caffeinate" not in config:
+    errors.append("Homebrew install command must reference the published cask")
 
 for forbidden in ["fonts.googleapis.com", "cdn.jsdelivr.net", "unpkg.com", "google-analytics", "gtag("]:
     if forbidden in (html + css + js).lower():
