@@ -2,8 +2,9 @@
 
 A focused Tauri desktop utility that keeps a Mac awake by owning the built-in `/usr/bin/caffeinate` process.
 
-![Caffeinate ready state](docs/screenshots/caffeinate-ready.png)
-![Caffeinate active state](docs/screenshots/caffeinate-active.png)
+| Caffeinate ready state | Caffeinate active state |
+| :---: | :---: |
+| ![Caffeinate ready state](docs/screenshots/caffeinate-ready.png) | ![Caffeinate active state](docs/screenshots/caffeinate-active.png) |
 
 ## What it does
 
