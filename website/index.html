@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4f0e7" />
+    <meta
+      name="description"
+      content="Caffeinate is a small macOS utility that keeps your Mac awake during long tasks. Local only, with no account or network access."
+    />
+    <meta property="og:title" content="Caffeinate — Keep your Mac awake" />
+    <meta
+      property="og:description"
+      content="A focused macOS utility for long builds, downloads, renders, uploads, and remote sessions."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/caffeinate-active.png" />
+    <title>Caffeinate — Keep your Mac awake</title>
+    <link rel="icon" href="assets/app-icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="site-config.js" defer></script>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" data-header>
+      <div class="shell header-inner">
+        <a class="brand" href="#top" aria-label="Caffeinate home">
+          <img src="assets/app-icon.svg" width="34" height="34" alt="" />
+          <span>Caffeinate</span>
+        </a>
+
+        <button
+          class="nav-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="primary-navigation"
+          data-nav-toggle
+        >
+          <span class="sr-only">Toggle navigation</span>
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24">
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
+
+        <nav id="primary-navigation" class="primary-nav" aria-label="Primary" data-navigation>
+          <a href="#demo">Demo</a>
+          <a href="#features">Features</a>
+          <a href="#install">Install</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+
+        <a class="header-download" href="./downloads/Caffeinate.dmg" download data-dmg-link>
+          Download DMG
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18">
+            <path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14" />
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <main id="main">
+      <section id="top" class="hero" aria-labelledby="hero-title">
+        <div class="shell hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="signal" aria-hidden="true"></span> macOS utility</p>
+            <h1 id="hero-title">Your Mac sleeps when you say so.</h1>
+            <p class="hero-lede">
+              Caffeinate keeps long builds, downloads, renders, uploads, and remote sessions running without changing your permanent power settings.
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="./downloads/Caffeinate.dmg" download data-dmg-link>
+                <svg aria-hidden="true" viewBox="0 0 24 24" width="21" height="21">
+                  <path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14" />
+                </svg>
+                Download for macOS
+              </a>
+              <a class="text-link" href="#install">See install options <span aria-hidden="true">↘</span></a>
+            </div>
+            <p class="release-note">
+              <span data-version>Version 1.0.0</span>
+              <span aria-hidden="true">·</span>
+              <span data-macos>macOS 12 or later</span>
+            </p>
+          </div>
+
+          <div class="hero-visual" aria-label="Caffeinate application preview">
+            <div class="hero-stage-mark" aria-hidden="true">AWAKE</div>
+            <img
+              src="assets/caffeinate-active.png"
+              width="1664"
+              height="1346"
+              alt="Caffeinate active state showing idle sleep blocked and an Allow Sleep button"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="truth-strip" aria-label="Product facts">
+        <div class="shell truth-grid">
+          <p><strong>Local only</strong><span>No account or telemetry</span></p>
+          <p><strong>Built on macOS</strong><span>Uses the system caffeinate utility</span></p>
+          <p><strong>Clear lifecycle</strong><span>Stop it or close the app</span></p>
+          <p><strong>Normal window</strong><span>No menu-bar clutter</span></p>
+        </div>
+      </section>
+
+      <section id="demo" class="demo-section" aria-labelledby="demo-title">
+        <div class="shell">
+          <div class="section-heading demo-heading">
+            <div>
+              <p class="eyebrow eyebrow-dark">Two states. No guessing.</p>
+              <h2 id="demo-title">See exactly what your Mac is doing.</h2>
+            </div>
+            <p>
+              The interface gives you one unmistakable action and the exact system command behind it.
+            </p>
+          </div>
+
+          <div class="demo-toolbar" role="tablist" aria-label="Application state">
+            <button
+              id="ready-tab"
+              class="demo-tab is-active"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              aria-controls="ready-panel"
+              tabindex="0"
+              data-demo-tab="ready"
+            >
+              <span class="tab-dot" aria-hidden="true"></span>
+              Ready
+            </button>
+            <button
+              id="awake-tab"
+              class="demo-tab"
+              type="button"
+              role="tab"
+              aria-selected="false"
+              aria-controls="awake-panel"
+              tabindex="-1"
+              data-demo-tab="awake"
+            >
+              <span class="tab-dot tab-dot-awake" aria-hidden="true"></span>
+              Awake
+            </button>
+          </div>
+
+          <div class="demo-frame">
+            <figure id="ready-panel" role="tabpanel" aria-labelledby="ready-tab" data-demo-panel="ready">
+              <img
+                src="assets/caffeinate-ready.png"
+                width="1664"
+                height="1346"
+                alt="Caffeinate ready state showing sleep allowed and a Keep Mac Awake button"
+                loading="lazy"
+              />
+              <figcaption>Ready state — choose a duration, then start one focused session.</figcaption>
+            </figure>
+            <figure
+              id="awake-panel"
+              role="tabpanel"
+              aria-labelledby="awake-tab"
+              data-demo-panel="awake"
+              hidden
+            >
+              <img
+                src="assets/caffeinate-active.png"
+                width="1664"
+                height="1346"
+                alt="Caffeinate awake state showing idle sleep blocked and an Allow Sleep button"
+                loading="lazy"
+              />
+              <figcaption>Awake state — the active assertion and stop action remain visible.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="features-section" aria-labelledby="features-title">
+        <div class="shell">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Designed to disappear</p>
+              <h2 id="features-title">Only the controls the job needs.</h2>
+            </div>
+            <p>A small utility should not become another system to manage.</p>
+          </div>
+
+          <div class="feature-list">
+            <article class="feature-row">
+              <p class="feature-number">01</p>
+              <h3>One clear switch</h3>
+              <p>Start or stop the awake session from a single primary control. Use <kbd>⌘</kbd><kbd>↵</kbd> when your hands are already on the keyboard.</p>
+            </article>
+            <article class="feature-row">
+              <p class="feature-number">02</p>
+              <h3>Finite when you need it</h3>
+              <p>Run until stopped or choose 30 minutes, 1 hour, 2 hours, or 4 hours. The app reports the remaining state without hiding it in a menu.</p>
+            </article>
+            <article class="feature-row">
+              <p class="feature-number">03</p>
+              <h3>Display stays optional</h3>
+              <p>Idle system sleep is blocked by default. Keeping the display on is a separate choice, so the safe setting remains the easy setting.</p>
+            </article>
+            <article class="feature-row">
+              <p class="feature-number">04</p>
+              <h3>No network required</h3>
+              <p>Caffeinate manages a built-in macOS command locally. There is no account, telemetry, cloud service, or hidden background session after the app exits.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="command-section" aria-labelledby="command-title">
+        <div class="shell command-grid">
+          <div>
+            <p class="eyebrow eyebrow-dark">Native truth</p>
+            <h2 id="command-title">The command is not hidden.</h2>
+          </div>
+          <div class="command-copy">
+            <p>
+              Caffeinate owns a fixed `/usr/bin/caffeinate` process and ties it to the application lifecycle. Close the app and the assertion ends.
+            </p>
+            <pre><code><span class="prompt">$</span> /usr/bin/caffeinate -i -w &lt;app-pid&gt;</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <section id="install" class="install-section" aria-labelledby="install-title">
+        <div class="shell">
+          <div class="section-heading install-heading">
+            <div>
+              <p class="eyebrow">Install Caffeinate</p>
+              <h2 id="install-title">Choose the path you trust.</h2>
+            </div>
+            <p>The DMG route is ready. Homebrew support will activate when the cask is published.</p>
+          </div>
+
+          <div class="install-methods">
+            <article class="install-method install-method-primary">
+              <div class="install-method-top">
+                <p class="method-label">Direct download</p>
+                <span class="status-badge status-ready">Available</span>
+              </div>
+              <h3>Install from DMG</h3>
+              <ol>
+                <li>Download and open the disk image.</li>
+                <li>Drag Caffeinate into Applications.</li>
+                <li>Open it and start an awake session.</li>
+              </ol>
+              <a class="button button-dark" href="./downloads/Caffeinate.dmg" download data-dmg-link>
+                Download Caffeinate.dmg
+                <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20">
+                  <path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14" />
+                </svg>
+              </a>
+            </article>
+
+            <article class="install-method" data-brew-method>
+              <div class="install-method-top">
+                <p class="method-label">Homebrew Cask</p>
+                <span class="status-badge status-pending" data-brew-status>Publishing in progress</span>
+              </div>
+              <h3>Install from Terminal</h3>
+              <p class="brew-description" data-brew-description>
+                The command is prepared, but the cask is not published yet. This method will enable automatically when the site configuration is updated.
+              </p>
+              <div class="command-box" data-command-box>
+                <code data-brew-command>brew install --cask caffeinate</code>
+                <button type="button" data-copy-brew disabled>
+                  <span data-copy-label>Not available</span>
+                  <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18">
+                    <rect x="8" y="8" width="11" height="11" rx="2" />
+                    <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" />
+                  </svg>
+                </button>
+              </div>
+            </article>
+          </div>
+
+          <p class="download-config-note">
+            Site maintainer: place the release at <code>downloads/Caffeinate.dmg</code> or update <code>dmgUrl</code> in <code>site-config.js</code>.
+          </p>
+        </div>
+      </section>
+
+      <section id="faq" class="faq-section" aria-labelledby="faq-title">
+        <div class="shell faq-grid">
+          <div>
+            <p class="eyebrow">Before you install</p>
+            <h2 id="faq-title">Questions, answered plainly.</h2>
+          </div>
+          <div class="faq-list">
+            <details>
+              <summary>Does Caffeinate keep working after I close it?</summary>
+              <p>No. Closing the application releases its sleep assertion. It does not leave a hidden background process running by design.</p>
+            </details>
+            <details>
+              <summary>Can it keep the screen on?</summary>
+              <p>Yes. “Keep display on” is an optional setting. The default session blocks idle system sleep while still allowing the display to turn off.</p>
+            </details>
+            <details>
+              <summary>Does it prevent sleep when the MacBook lid is closed?</summary>
+              <p>No. Caffeinate does not override macOS lid-close behavior.</p>
+            </details>
+            <details>
+              <summary>Does the application send any data?</summary>
+              <p>No. The application is designed to work locally without accounts, telemetry, or network requests.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <div class="footer-brand">
+          <img src="assets/app-icon.svg" width="40" height="40" alt="" />
+          <div>
+            <strong>Caffeinate</strong>
+            <span>Keep the Mac awake. Keep the interface quiet.</span>
+          </div>
+        </div>
+        <p>© <span data-year>2026</span> Caffeinate. Built for macOS.</p>
+      </div>
+    </footer>
+
+    <div class="toast" role="status" aria-live="polite" aria-atomic="true" data-toast></div>
+  </body>
+</html>
