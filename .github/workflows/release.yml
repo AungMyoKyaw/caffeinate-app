@@ -1,0 +1,50 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release-macos:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: canary
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy,rustfmt
+          targets: aarch64-apple-darwin,x86_64-apple-darwin
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build and publish macOS release
+        uses: tauri-apps/tauri-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: v__VERSION__
+          releaseName: "Caffeinate v__VERSION__"
+          releaseBody: "See the assets to download and install this version."
+          releaseDraft: true
+          prerelease: false
+          args: --bundles app,dmg --target universal-apple-darwin
+
+      - name: Verify ad-hoc signature and universal binary
+        run: |
+          APP="src-tauri/target/universal-apple-darwin/release/bundle/macos/Caffeinate.app"
+          codesign -dv --verbose=2 "$APP" 2>&1 | grep "Signature=adhoc"
+          BINARY=$(ls "$APP/Contents/MacOS/"*)
+          lipo -info "$BINARY" | grep -q "x86_64 arm64" && echo "Universal binary OK"
