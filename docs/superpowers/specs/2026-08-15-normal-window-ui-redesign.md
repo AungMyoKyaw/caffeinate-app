@@ -14,6 +14,19 @@ The redesign fixes the current interface's excessive scale, dead space, weak ali
 - The layout remains composed and readable when enlarged, but does not stretch controls across the available width.
 - The content uses one centered column with a maximum width of approximately 520 points.
 
+## Application icon
+
+The Dock icon remains the existing orange power-mark design, but its optical scale is corrected. The current SVG draws its orange rounded rectangle across the full 1024 × 1024 canvas, so macOS displays it substantially larger than neighboring icons.
+
+- Keep a square 1024 × 1024 transparent source canvas.
+- Inset the complete rounded-square artwork to approximately 824 × 824, centered with 100 points of transparent space on every side.
+- Scale the internal power mark together with the orange container so their current proportions do not change.
+- Keep the orange, dark glyph, corner shape, and overall identity unchanged.
+- Regenerate all packaged icon assets from the corrected source with Tauri's current `tauri icon` workflow, including `icon.icns`, `32x32.png`, `128x128.png`, and `128x128@2x.png`.
+- Inspect the installed/running icon beside other ordinary macOS applications in the Dock. Adjust the inset only if optical comparison shows that the 824-point target is still visibly mismatched.
+
+This follows the current Tauri 2 documentation: `tauri icon` accepts a square PNG or SVG with transparency and generates the platform assets referenced by `bundle.icon`. Tauri does not define macOS optical padding, so the transparent inset is an application artwork decision rather than a configuration workaround.
+
 ## Information hierarchy
 
 The window has four visually connected regions:
@@ -82,11 +95,13 @@ The redesign is frontend presentation work plus window sizing:
 - Add assertions preventing redundant selected-duration copy if practical.
 - Run frontend tests, type checking, production build, and Rust tests.
 - Launch the macOS application and inspect idle, active, busy, error, dark, and light appearances at default and minimum window sizes.
+- Rebuild the icon set from the corrected source and compare the Dock icon's optical size with adjacent standard macOS app icons.
 
 ## Acceptance criteria
 
 - The product remains a normal macOS windowed application with a Dock icon and standard window chrome.
 - No menu-bar, tray, popover, accessory-only, or hidden-Dock behavior is introduced.
+- The Dock icon retains its design but no longer appears oversized beside neighboring applications.
 - Default window size is 600 × 520 and minimum size is 540 × 480.
 - The interface no longer reads as an oversized dashboard or marketing hero.
 - The status/action area, settings, and footer share a consistent alignment system.
