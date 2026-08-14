@@ -21,6 +21,12 @@ The frontend is replaced from React with Svelte 5. The Rust process controller i
 
 The old UI was calm but visually flat. The new interface keeps macOS restraint while making the awake state unmistakable.
 
+### Styling system
+
+The frontend styling is built with **Tailwind CSS v4** via the official `@tailwindcss/vite` plugin. Tailwind v4's CSS-first `@theme` block in `src/styles.css` maps the Carbon + Volt design tokens (colors, fonts, elevation) directly to utility classes, so the component markup in `App.svelte` stays in Tailwind utilities rather than hand-written CSS. No `tailwind.config.js` is used; design tokens live next to the styles that consume them.
+
+The design tokens are also exposed as CSS custom properties (`--color-*`, `--font-*`, `--shadow-lift`) for the few states that Tailwind cannot reach directly (keyframes, `for` peer-targeting, and the duration-cell `.chosen` inset ring).
+
 ### Palette
 
 Dark appearance uses the Design.md-generated roles as the source of truth:
@@ -62,9 +68,9 @@ Type hierarchy:
 
 A single vertical control surface with four zones:
 
-1. Compact header with product name and local-only assurance.
+1. Compact header with the new orange Carbon + Volt icon and product name, plus a local-only assurance on the right.
 2. Open state stage containing the status signal, headline, detail, and one circular wake control.
-3. Two settings rows: visible duration rail and display toggle.
+3. Two settings rows: visible duration rail (with a live "current selection" pill on the left) and display toggle.
 4. Technical command footer.
 
 No navigation, cards grid, sidebar, decorative hero, or marketing content.
@@ -73,7 +79,7 @@ No navigation, cards grid, sidebar, decorative hero, or marketing content.
 
 The primary action is a 124 px circular control. Ready state uses a restrained carbon ring and a power glyph. Active state becomes a solid Volt control with a second state ring and explicit text. The visual change is paired with copy (`Mac can sleep.` → `Mac stays awake.`), status text (`Ready` → `Awake`), and the action label (`Keep Mac Awake` → `Allow Sleep`) so state is never color-only.
 
-The duration selector becomes a five-segment radio rail: `Until stopped`, `30m`, `1h`, `2h`, `4h`. It is faster to scan than a select and remains a single lightweight native form group.
+The duration selector becomes a five-segment radio rail: `Until stopped`, `30m`, `1h`, `2h`, `4h`. It is faster to scan than a select and remains a single lightweight native form group. The left copy shows the current selection as a small Volt-dot pill so the Duration row carries the same visual weight as the Keep-display-on row beneath it.
 
 ### Motion
 
@@ -108,11 +114,12 @@ Only state transitions use motion: 160–220 ms transform/opacity/border transit
 
 ## Lightweight budget
 
-Production dependencies should drop from three (`@tauri-apps/api`, React, React DOM) to two (`@tauri-apps/api`, Svelte). No new production dependency beyond Svelte is allowed. Development-only quality tooling may be added because it does not ship in the application bundle.
+Production dependencies stay at two (`@tauri-apps/api`, Svelte). No production CSS framework or UI kit is added. Tailwind CSS v4 and `@tailwindcss/vite` are development-only dependencies — they generate the production CSS at build time and do not appear in the runtime bundle. The Tailwind runtime is a small compiled stylesheet, not a JS framework.
 
 Measure before/after:
 
 - Production dependency count.
+- Development dependency count (now includes Tailwind toolchain).
 - Frontend source bytes.
 - Vite production asset bytes when dependency installation is available.
 - macOS `.app`/DMG size when macOS packaging is available.
@@ -121,6 +128,7 @@ Measure before/after:
 
 - React is completely removed from app source/configuration.
 - Svelte 5 is the only frontend UI framework.
+- Styling uses Tailwind CSS v4 utilities with the Carbon + Volt tokens defined in the `@theme` block.
 - Core behavior and Tauri command contract remain intact.
 - Ready, busy, active, and error states are visually distinct and accessible.
 - Duration rail and display toggle work only when idle.
@@ -128,3 +136,4 @@ Measure before/after:
 - Light/dark appearance and reduced-motion behavior are implemented.
 - No network requests, telemetry, accounts, tray/menu-bar mode, shell plugin, or arbitrary command execution is introduced.
 - No new production dependency besides Svelte.
+- Tailwind CSS toolchain is dev-only and does not ship in the application bundle.

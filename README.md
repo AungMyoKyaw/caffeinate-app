@@ -40,6 +40,7 @@ Detailed diagrams:
 ## Technology stack
 
 - Svelte 5 + TypeScript
+- Tailwind CSS v4 (build-time utility framework via `@tailwindcss/vite`)
 - Vite 8
 - Tauri 2
 - Rust
@@ -48,14 +49,14 @@ Detailed diagrams:
 - ESLint + `eslint-plugin-svelte`
 - Prettier + `prettier-plugin-svelte`
 
-No UI kit, router, web-font package, icon package, state library, analytics SDK, or shell plugin is used.
+No UI kit, router, web-font package, icon package, state library, analytics SDK, or shell plugin is used. Tailwind CSS compiles down to a single small stylesheet at build time and does not add JavaScript to the runtime bundle.
 
 ## Requirements
 
 - macOS 12 or newer
 - Xcode Command Line Tools
 - Rust stable toolchain
-- Bun 1.3.14
+- Bun canary (1.4.0-canary.1)
 
 Install Apple's command-line tools:
 

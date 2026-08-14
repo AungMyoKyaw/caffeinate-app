@@ -32,7 +32,7 @@ const vitestConfig = required("vitest.config.ts");
 const readme = required("README.md");
 required("scripts/check-focused-tests.mjs");
 
-expect(packageSource, /"packageManager"\s*:\s*"bun@1\.3\.14"/, "packageManager must pin Bun 1.3.14");
+expect(packageSource, /"packageManager"\s*:\s*"bun@\d+\.\d+\.\d+-canary\.\d+\+[0-9a-f]{7,}"/, "packageManager must pin a Bun canary revision");
 expect(packageSource, /"tauri:dev"\s*:\s*"bun tauri dev"/, "development must invoke Tauri through Bun");
 expect(packageSource, /"tauri:build"\s*:\s*"bun tauri build/, "build must invoke Tauri through Bun");
 expect(packageSource, /universal-apple-darwin/, "build must produce a universal macOS binary");
@@ -49,6 +49,9 @@ if (JSON.stringify(productionDependencies) !== JSON.stringify(allowedProductionD
     `production dependencies must stay lightweight: expected ${allowedProductionDependencies.join(", ")}, got ${productionDependencies.join(", ")}`
   );
 }
+
+expect(packageSource, /"tailwindcss"\s*:\s*"/, "Tailwind CSS dev dependency is missing");
+expect(packageSource, /"@tailwindcss\/vite"\s*:\s*"/, "@tailwindcss/vite dev dependency is missing");
 
 for (const forbidden of ["react", "react-dom", "@vitejs/plugin-react"]) {
   if (packageSource.includes(`"${forbidden}"`)) failures.push(`${forbidden} must be removed from the Svelte rewrite`);
@@ -77,7 +80,7 @@ expect(app, /aria-live="polite"/, "status updates need an aria-live region");
 expect(app, /role="alert"/, "errors need an alert region");
 expect(app, /metaKey.*Enter|Enter.*metaKey/s, "Command-Return keyboard action is missing");
 expect(app, /DURATION_PRESETS/, "duration presets must remain visible in the Svelte UI");
-expect(css, /:focus-visible/, "visible keyboard focus styling is missing");
+expect(app, /focus-visible:/, "visible keyboard focus styling is missing");
 expect(css, /prefers-reduced-motion/, "reduced motion handling is missing");
 expect(css, /prefers-color-scheme:\s*dark/, "dark appearance support is missing");
 expect(vitestConfig, /statements:\s*100/, "coverage must require 100% statements");
