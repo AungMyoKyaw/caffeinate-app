@@ -12,8 +12,8 @@ const activeStatus: CaffeinateStatus = {
 
 describe("createCaffeinateClient", () => {
   it("maps start, stop, and status to the exact Tauri commands", async () => {
-    const call = vi.fn<InvokeLike>().mockResolvedValue(activeStatus);
-    const client = createCaffeinateClient(call);
+    const call = vi.fn(async () => activeStatus);
+    const client = createCaffeinateClient(call as InvokeLike);
     const options = { keepDisplayAwake: true, timeoutSeconds: 3600 };
 
     await expect(client.start(options)).resolves.toEqual(activeStatus);
