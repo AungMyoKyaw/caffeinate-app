@@ -1,50 +1,35 @@
-export interface DurationPreset {
+export type DurationPreset = {
+  id: string;
   label: string;
+  shortLabel: string;
   seconds: number | null;
-}
+};
 
 export const DURATION_PRESETS: readonly DurationPreset[] = [
-  { label: "Until stopped", seconds: null },
-  { label: "30 minutes", seconds: 30 * 60 },
-  { label: "1 hour", seconds: 60 * 60 },
-  { label: "2 hours", seconds: 2 * 60 * 60 },
-  { label: "4 hours", seconds: 4 * 60 * 60 }
+  { id: "until-stopped", label: "Until stopped", shortLabel: "Until stopped", seconds: null },
+  { id: "30-minutes", label: "30 minutes", shortLabel: "30m", seconds: 30 * 60 },
+  { id: "1-hour", label: "1 hour", shortLabel: "1h", seconds: 60 * 60 },
+  { id: "2-hours", label: "2 hours", shortLabel: "2h", seconds: 2 * 60 * 60 },
+  { id: "4-hours", label: "4 hours", shortLabel: "4h", seconds: 4 * 60 * 60 }
 ] as const;
 
-export function serializeDuration(seconds: number | null): string {
-  return seconds === null ? "until-stopped" : String(seconds);
-}
-
-export function parseDuration(value: string): number | null {
-  if (value === "until-stopped") return null;
-
-  const parsed = Number(value);
-  if (!Number.isInteger(parsed) || parsed < 60 || parsed > 86_400) {
-    throw new Error("Duration must be between one minute and 24 hours.");
-  }
-
-  return parsed;
-}
-
 export function formatRemaining(seconds: number | null): string {
-  if (seconds === null) return "Until you stop it";
-  if (seconds <= 0) return "Finishing…";
+  if (seconds === null) return "Until stopped";
+  if (seconds <= 0) return "Ending now";
 
-  const hours = Math.floor(seconds / 3_600);
-  const minutes = Math.ceil((seconds % 3_600) / 60);
+  const totalMinutes = Math.ceil(seconds / 60);
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
 
-  if (hours === 0) return `${minutes} min remaining`;
-  if (minutes === 0) return `${hours} hr remaining`;
-  return `${hours} hr ${minutes} min remaining`;
+  if (hours === 0) return `${minutes}m remaining`;
+  if (minutes === 0) return `${hours}h remaining`;
+  return `${hours}h ${minutes}m remaining`;
 }
 
-export function buildCommandPreview(
-  keepDisplayAwake: boolean,
-  timeoutSeconds: number | null
-): string {
-  const args = ["/usr/bin/caffeinate", "-i"];
+export function buildCommandPreview(keepDisplayAwake: boolean, timeoutSeconds: number | null): string {
+  const args = ["-i"];
   if (keepDisplayAwake) args.push("-d");
   if (timeoutSeconds !== null) args.push("-t", String(timeoutSeconds));
   args.push("-w", "<app-pid>");
-  return args.join(" ");
+  return `/usr/bin/caffeinate ${args.join(" ")}`;
 }
