@@ -69,6 +69,25 @@ describe("App", () => {
     expect(target.querySelector('[aria-live="polite"]')).not.toBeNull();
   });
 
+  it("presents duration once without a redundant selected-value pill", async () => {
+    const { client } = makeClient();
+    const target = await render(client);
+
+    expect(target.querySelector('[data-testid="selected-duration-pill"]')).toBeNull();
+    expect(target.querySelector('[aria-label="Wake session duration"]')).not.toBeNull();
+    expect(target.querySelectorAll('input[name="duration"]')).toHaveLength(5);
+  });
+
+  it("groups state copy and the primary action in one compact region", async () => {
+    const { client } = makeClient();
+    const target = await render(client);
+    const region = target.querySelector('[data-testid="status-action"]');
+
+    expect(region).not.toBeNull();
+    expect(region?.textContent).toContain("Mac can sleep.");
+    expect(region?.querySelector(".power-control")).not.toBeNull();
+  });
+
   it("starts with selected display and duration options", async () => {
     const { client, start } = makeClient();
     await render(client);
