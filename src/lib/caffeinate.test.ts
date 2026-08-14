@@ -1,5 +1,10 @@
 import { describe, expect, it, vi } from "vitest";
-import { createCaffeinateClient, EMPTY_STATUS, type CaffeinateStatus, type InvokeLike } from "./caffeinate";
+import {
+  createCaffeinateClient,
+  EMPTY_STATUS,
+  type CaffeinateStatus,
+  type InvokeLike
+} from "./caffeinate";
 
 const activeStatus: CaffeinateStatus = {
   active: true,

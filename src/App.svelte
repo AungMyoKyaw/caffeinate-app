@@ -114,7 +114,7 @@
   class:error={Boolean(error)}
   class="grid min-h-screen w-full grid-rows-[auto_1fr_auto] bg-paper text-ink"
 >
-  <header class="flex min-h-[60px] items-center justify-between border-b border-rule px-6 py-4">
+  <header class="flex min-h-[56px] items-center justify-between border-b border-rule px-6 py-3">
     <div class="flex items-center gap-[9px]">
       <span
         class="inline-grid h-[18px] w-[18px] place-items-center overflow-hidden rounded-[4px]"
@@ -169,10 +169,10 @@
     </div>
   </header>
 
-  <main class="mx-auto flex w-full max-w-[520px] flex-col px-6 py-5">
+  <main class="mx-auto flex w-full max-w-[520px] flex-col px-6 py-3">
     <section
       data-testid="status-action"
-      class="status-action grid min-h-[190px] grid-cols-[minmax(0,1fr)_132px] items-center gap-7 border-b border-rule py-4 text-left"
+      class="status-action grid min-h-[168px] grid-cols-[minmax(0,1fr)_132px] items-center gap-7 border-b border-rule py-3 text-left"
       aria-live="polite"
       aria-atomic="true"
     >
@@ -267,7 +267,7 @@
     <section class="border-t border-rule" aria-label="Wake session settings">
       <fieldset
         disabled={settingsDisabled}
-        class="grid min-h-[68px] grid-cols-[minmax(150px,0.8fr)_minmax(270px,1.2fr)] items-center gap-5 border-0 border-b border-rule py-3"
+        class="grid min-h-16 grid-cols-[minmax(150px,0.8fr)_minmax(270px,1.2fr)] items-center gap-5 border-0 border-b border-rule py-3"
       >
         <legend class="sr-only">Duration</legend>
         <div class="flex flex-col items-start gap-[4px] text-left">
@@ -303,7 +303,7 @@
       </fieldset>
 
       <div
-        class="grid min-h-[68px] grid-cols-[minmax(150px,0.8fr)_minmax(270px,1.2fr)] items-center gap-5 border-b border-rule py-3"
+        class="grid min-h-16 grid-cols-[minmax(150px,0.8fr)_minmax(270px,1.2fr)] items-center gap-5 border-b border-rule py-3"
       >
         <div class="flex flex-col items-start gap-[4px] text-left">
           <label class="p-0 text-[12.5px] font-semibold text-ink" for="keep-display-awake"

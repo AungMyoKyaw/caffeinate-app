@@ -64,7 +64,6 @@
 
   body {
     min-width: 540px;
-    min-height: 480px;
     overflow: auto;
     background: var(--color-paper);
     color: var(--color-ink);
