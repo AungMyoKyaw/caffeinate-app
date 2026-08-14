@@ -1,99 +1,153 @@
-# Caffeinate Ralph Run Log
+# Caffeinate Svelte Rewrite — Ralph Run Log
 
-Run date: 2026-08-01 (Asia/Bangkok)  
-Release: 1.0.0  
-Branch: `feature/caffeinate-app`
+Run date: 2026-08-14 (Asia/Bangkok)
+Branch: `rewrite/svelte-carbon-volt`
 
-## Research and design direction — PASS
+## Research — PASS
 
-Context7 was used to review the current Tauri 2 command, managed-state, lifecycle, macOS bundling, and Bun workflows. The implementation pins the current JavaScript-side stable releases recorded in the plan and uses Cargo's normal Tauri 2 compatible range for Rust dependencies.
+Scoped research was completed before source modification:
 
-The Impeccable 4.0.4 skill was applied in **Operate** mode. The interface prioritizes state, one primary action, scanability, keyboard access, and exact command evidence. It avoids card grids, gradients, glass effects, decorative dashboards, excessive pills, and menu-bar-only behavior.
+- Context7: Svelte 5 runes/Vite patterns, Tauri 2 Vite/IPC configuration, Bun coverage behavior.
+- Design.md: generated dark and light Carbon + Volt color schemes; icon semantics were reviewed without adding an icon package.
+- Firecrawl: current Svelte/Vite plugin, Svelte checker, formatter, lint, Vitest, and TypeScript compatibility metadata; Apple macOS HIG accessibility/layout guidance.
+- GitHub release metadata: current checkout/setup-bun action releases were checked before CI edits.
 
-Chosen direction: a quiet native utility window with a warm macOS system surface, one large sleep-state field, one dominant action, two bounded controls, and a persistent command ledger.
+Implementation-impacting decision: current Svelte checker/typescript-eslint peer ranges support TypeScript 6, not TypeScript 7, so the rewrite pins TypeScript 6.0.3 for supported static-analysis tooling.
 
-## Pass 0 — Baseline and contract: PASS
+## Design — PASS
 
-Created the product truth, design system, implementation specification, plan, and bounded Ralph loop.
+Created `DESIGN.md` and the dated design specification before implementation. Direction: **Carbon + Volt** — a single macOS wake control with much stronger ready/active state geometry, a visible duration rail, explicit local-only assurance, no remote font, no UI kit, and no decorative dashboard patterns.
 
-The repository contract was committed before the implementation. It initially failed because the required Tauri configuration, Rust process controller, frontend adapter, and UI contract did not exist.
+The Rust `CaffeinateController` was deliberately retained. It already owns the safety-critical fixed-path process contract correctly, so rewriting it would add risk without serving the requested UI rewrite.
 
-Evidence:
+## Baseline — PARTIAL EVIDENCE
 
-- baseline commit: `45e6bb8`
-- failing-contract commit: `ada489d`
+Recorded before modification:
 
-## Pass 1 — Process safety: PASS by static contract; native execution pending macOS
+- production dependencies: 3;
+- selected frontend source: 17,479 bytes;
+- repository clean after clone;
+- input Git bundle verified as complete and cloneable.
 
-Implemented:
+Baseline frontend tests/build and Rust tests could not run because Bun and Rust are not installed in this sandbox.
 
-- direct fixed-binary execution of `/usr/bin/caffeinate` without a shell;
-- `-i`, optional `-d`, optional validated `-t`, and `-w <app-pid>` argument construction;
-- owned child-process state behind a mutex;
-- idempotent start, stale-process reconciliation, stop, wait, and exit cleanup;
-- typed camelCase status returned through three Tauri commands;
-- macOS-only spawn guard;
-- Rust unit tests for arguments and timeout bounds.
-
-The `-w <app-pid>` ownership link provides a second cleanup path if the app terminates unexpectedly.
-
-Native Rust tests were not run in this container because Rust/Cargo are not installed and the environment cannot download toolchains. GitHub Actions is configured to run formatting, tests, Clippy, and the Tauri macOS build on `macos-14`.
-
-## Pass 2 — Operable interface: PASS by deterministic source checks
+## Fast inner loop — frontend architecture
 
 Implemented:
 
-- React 19 typed Tauri adapter;
-- status polling while active;
-- `⌘ Return` start/stop shortcut;
-- busy, disabled, active, inactive, timed, and error states;
-- duration presets and optional display assertion;
-- exact command preview and active command evidence;
-- visible labels, live status, alert semantics, focus styles, and reduced motion;
-- light and dark system color schemes;
-- normal resizable window with a 620×500 minimum.
+- React/React DOM removal from source and manifest;
+- Svelte 5 composition root and Svelte Vite plugin configuration;
+- injectable typed Tauri client;
+- pure duration/presentation helpers;
+- Vitest unit/component/bootstrap tests;
+- 100% statements/branches/functions/lines thresholds in Vitest configuration;
+- focused/skipped-test guard;
+- Prettier, ESLint/Svelte, and Svelte Check commands;
+- no new production dependency beyond Svelte.
 
-TypeScript syntax validation passed for six TypeScript/TSX files using the locally available TypeScript parser. Full dependency-aware type checking awaits `bun install` on macOS.
+Environment-supported proof:
 
-## Pass 3 — Impeccable finish review: PASS
+```text
+node scripts/check-focused-tests.mjs
+Test focus check passed: zero skipped, disabled, todo, or focused tests found.
 
-Rendered deterministic fixtures from the real application CSS at:
+node scripts/verify-contract.mjs
+Contract passed: Svelte frontend, fixed-process safety, local-only scope, coverage policy, and lightweight dependency boundary are intact.
 
-- ready state: 720×560;
-- active state: 720×560;
-- active compact state: 620×500.
+git diff --check
+(no output; exit 0)
+```
 
-First batched review found one P1 issue: the active button changed text color immediately while its background color was still transitioning, producing a brief low-contrast frame.
+Dependency-aware formatter/linter/type/test/coverage/build execution remains blocked by unavailable Bun/packages.
 
-One repair batch removed the background-color transition from the primary action. The confirmation render showed:
+## Fast inner loop — UI and bug protocol
 
-- immediate readable black-on-amber active action;
-- no clipping or overflow at either supported viewport;
-- clear state hierarchy and command evidence;
-- readable disabled controls;
-- no P0/P1 visual defects;
-- no generic dashboard, nested-card, gradient, glass, or decorative AI-default patterns.
+### Visual fixture hidden-error defect
 
-## Pass 4 — Release preflight: PASS for available checks
+1. **Reproduce:** first Chromium render showed the error banner in the ready state.
+2. **Expected:** no error region when no error exists.
+3. **Actual:** CSS `.error-banner { display: flex }` overrode the fixture's `hidden` attribute.
+4. **Root cause:** preview fixture used `hidden`, while the real Svelte component conditionally omits the node.
+5. **Fix:** added a global `[hidden] { display: none !important; }` rule for deterministic fixture behavior.
+6. **Regression proof:** ready Chromium render no longer contains the banner.
 
-Passed locally:
+### Shared-selector regression introduced during error-state tuning
 
-- repository contract validator;
-- JavaScript validator syntax;
-- TypeScript/TSX syntax: 6 files, 0 errors;
-- JSON syntax: 4 files;
-- Bun-only executable/config scan;
-- deterministic ready, active, and compact screenshot generation;
-- macOS `.icns` file-format inspection.
+1. **Reproduce:** error-state Chromium screenshot showed an approximately 270 px header.
+2. **Expected:** normal 64 px header.
+3. **Actual:** brand lockup inherited the error-state minimum height.
+4. **Root cause:** `.error .state-stage` was accidentally inserted into the existing shared flex selector group.
+5. **Fix:** restored the flex group and moved `.error .state-stage` to its own selector.
+6. **Regression proof:** re-rendered ready, active, error, busy, and compact states; header geometry returned to normal.
 
-Unavailable in this Linux container:
+### Compact-window overflow
 
-- `bun install`, `bun test`, and the dependency-aware Vite/TypeScript build because Bun is not installed and external package downloads are blocked;
-- `cargo fmt`, `cargo test`, and `cargo clippy` because Rust/Cargo are not installed;
-- native `.app` and `.dmg` compilation because Tauri macOS bundles must be built on macOS.
+1. **Reproduce:** the 620×560 active preview had a 627 px scroll height and hid the command footer below the viewport.
+2. **Expected:** primary UI and command evidence visible at the supported minimum window.
+3. **Root cause:** the richer control stage requires more vertical space than the previous React layout.
+4. **Fix:** set the native minimum window to 600×640 and default size to 760×680.
+5. **Regression proof:** active compact render at 600×640 reports `scrollWidth=600`, `scrollHeight=640`, `clientWidth=600`, `clientHeight=640`.
 
-These limitations are release blockers for a signed public binary, not hidden passes. The source package includes exact macOS commands and a macOS CI workflow to execute the missing gates.
+### Tauri camelCase contract regression found in release audit
 
-## Exit condition
+1. **Reproduce:** compared the rewritten TypeScript bridge with the retained Rust structs annotated `#[serde(rename_all = "camelCase")]` and the original working React bridge.
+2. **Expected:** frontend payload/status fields use `keepDisplayAwake`, `timeoutSeconds`, `startedAtUnixMs`, and `remainingSeconds`.
+3. **Actual:** the first Svelte bridge draft used snake_case names, which would break start-command deserialization and make display/remaining status fields undefined.
+4. **Root cause:** the frontend rewrite translated Rust field identifiers instead of preserving Serde's JavaScript wire names.
+5. **Regression guard:** client/unit fixtures now use the exact camelCase contract, and `scripts/verify-contract.mjs` rejects snake_case drift in the frontend bridge.
+6. **Proof available in this sandbox:** `node scripts/verify-contract.mjs` passes after the correction. Native invoke execution remains part of the blocked macOS runtime gate.
 
-The source release is complete when the final commit is archived from Git, the ZIP passes integrity inspection, and its SHA-256 is recorded. Native binary release remains pending execution of the configured macOS CI or a local Mac build.
+## Chromium visual verification — PASS for frontend preview
+
+Rendered the production CSS with a deterministic HTML fixture in real Chromium using the system browser and Playwright control. Direct localhost/file navigation is blocked by sandbox browser policy, so the fixture was loaded with `page.set_content`; rendering still occurred in the real Chromium engine.
+State screenshots are captured after a 300 ms settle period so the 180 ms control transition reaches its steady visual state.
+
+Verified screenshots:
+
+- `docs/screenshots/svelte-ready.png` — dark ready, 760×680;
+- `docs/screenshots/svelte-active.png` — dark active, 760×680;
+- `docs/screenshots/svelte-ready-light.png` — light ready, 760×680;
+- `docs/screenshots/svelte-active-compact.png` — dark active compact, 600×640;
+- `docs/screenshots/svelte-error.png` — error, 760×680;
+- `docs/screenshots/svelte-busy.png` — busy/starting, 760×680.
+
+All default/error/busy renders report no horizontal or vertical overflow at 760×680. Compact active reports no overflow at 600×640. Focus verification on the primary action reported a 3 px solid Volt outline with a 3 px offset. Active controls are visibly disabled and state is communicated by headline/status/action text plus geometry, not only color.
+
+Native Tauri/WebKit visual execution is unavailable in this Linux sandbox; that limitation is recorded separately rather than being folded into the browser-preview result.
+
+## Lightweight evidence — PASS for measurable source/dependency metrics
+
+- direct production dependencies: 3 → 2 (33.3% fewer);
+- final selected frontend source: 21,345 bytes;
+- runtime UI kit/router/state/icon/font/animation dependencies added: 0;
+- production bundle, `.app`, DMG, launch-time, CPU, and memory measurements: blocked until dependency/native builds can run.
+
+See `docs/performance.md`.
+
+## Full release loop — current status
+
+Environment-supported gates rerun after implementation:
+
+- repository contract: PASS;
+- focused/skipped-test static guard: PASS;
+- Node syntax for repository scripts: PASS;
+- whitespace diff check: PASS;
+- Chromium preview visual verification: PASS;
+- documentation/diagram presence: PASS by source inspection;
+- Git repository/bundle verification: pending final commit/bundle step.
+
+Blocked gates:
+
+- `bun install --frozen-lockfile` and lockfile regeneration: Bun/package network unavailable;
+- Prettier execution: dependencies unavailable;
+- ESLint execution: dependencies unavailable;
+- `svelte-check`: dependencies unavailable;
+- Vitest suite: dependencies unavailable;
+- actual coverage report: dependencies unavailable;
+- Vite production build: dependencies unavailable;
+- frontend dependency audit: dependencies unavailable;
+- Rust format/test/Clippy: Rust toolchain unavailable;
+- native macOS `.app`/DMG build: Linux host cannot package/verify the macOS application;
+- native Tauri/WebKit runtime visual verification: macOS runtime unavailable.
+
+No blocked gate is reported as passing.

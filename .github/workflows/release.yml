@@ -12,11 +12,11 @@ jobs:
   release-macos:
     runs-on: macos-14
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v7.0.1
 
-      - uses: oven-sh/setup-bun@v2
+      - uses: oven-sh/setup-bun@v2.2.0
         with:
-          bun-version: canary
+          bun-version: 1.3.14
 
       - uses: dtolnay/rust-toolchain@stable
         with:
@@ -28,7 +28,14 @@ jobs:
           workspaces: src-tauri
 
       - name: Install dependencies
-        run: bun install
+        run: bun install --frozen-lockfile
+
+      - name: Verify source before packaging
+        run: |
+          bun run verify
+          cargo fmt --manifest-path src-tauri/Cargo.toml --all -- --check
+          cargo test --manifest-path src-tauri/Cargo.toml
+          cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets --all-features -- -D warnings
 
       - name: Build and publish macOS release
         uses: tauri-apps/tauri-action@v1
