@@ -134,7 +134,7 @@ Environment-supported gates rerun after implementation:
 - whitespace diff check: PASS;
 - Chromium preview visual verification: PASS;
 - documentation/diagram presence: PASS by source inspection;
-- Git repository/bundle verification: pending final commit/bundle step.
+- preliminary Git bundle verification: PASS at commit `79e78299f447`; bundle reported complete history, clone selected `rewrite/svelte-carbon-volt`, preserved `v1.0.0`, and clone reran the focused-test guard plus repository contract successfully. The final release bundle is regenerated after this log commit.
 
 Blocked gates:
 
