@@ -93,12 +93,7 @@ Delete `selectedPresetLabel` and remove its pill from the Duration label. Keep `
 Reshape the top of `<main>` to use this semantic structure while retaining the existing Svelte copy and event handlers:
 
 ```svelte
-<section
-  data-testid="status-action"
-  class="status-action"
-  aria-live="polite"
-  aria-atomic="true"
->
+<section data-testid="status-action" class="status-action" aria-live="polite" aria-atomic="true">
   <div class="status-copy">
     <div class="status-label">
       <!-- retain the current active lightning / ready dot conditional -->
@@ -314,4 +309,3 @@ git log -5 --oneline
 ```
 
 Expected: no whitespace errors; all task commits are present; any unrelated pre-existing user changes remain preserved and identifiable.
-

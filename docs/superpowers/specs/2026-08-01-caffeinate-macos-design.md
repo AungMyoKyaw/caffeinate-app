@@ -13,12 +13,14 @@ The user delegated secondary feature choices and explicitly requested immediate 
 The Tauri Rust backend spawns `/usr/bin/caffeinate` directly with `std::process::Command`, stores the child handle in managed state, polls it through typed commands, and kills it during stop or application exit.
 
 Advantages:
+
 - Smallest command surface.
 - No arbitrary shell execution.
 - Reliable ownership and cleanup.
 - Easy to test argument construction independently.
 
 Trade-off:
+
 - macOS-specific backend code.
 
 ### 2. Tauri shell plugin
@@ -52,12 +54,14 @@ It polls status once per second while active so a timed process can transition b
 A `CaffeinateController` stored through `tauri::Builder::manage` owns `Mutex<Option<CaffeinateSession>>`.
 
 `CaffeinateSession` contains:
+
 - `std::process::Child`
 - start timestamp
 - optional timeout in seconds
 - whether display-awake was enabled
 
 The backend never passes user text to a shell. It builds a fixed argument list:
+
 - always `-i`
 - optional `-d`
 - optional `-t <seconds>`

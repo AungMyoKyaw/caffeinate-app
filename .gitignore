@@ -1,6 +1,7 @@
 .worktrees/
 node_modules/
 dist/
+coverage/
 src-tauri/target/
 .DS_Store
 *.log

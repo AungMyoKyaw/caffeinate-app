@@ -32,9 +32,21 @@ const vitestConfig = required("vitest.config.ts");
 const readme = required("README.md");
 required("scripts/check-focused-tests.mjs");
 
-expect(packageSource, /"packageManager"\s*:\s*"bun@\d+\.\d+\.\d+-canary\.\d+\+[0-9a-f]{7,}"/, "packageManager must pin a Bun canary revision");
-expect(packageSource, /"tauri:dev"\s*:\s*"bun tauri dev"/, "development must invoke Tauri through Bun");
-expect(packageSource, /"tauri:build"\s*:\s*"bun tauri build/, "build must invoke Tauri through Bun");
+expect(
+  packageSource,
+  /"packageManager"\s*:\s*"bun@\d+\.\d+\.\d+-canary\.\d+\+[0-9a-f]{7,}"/,
+  "packageManager must pin a Bun canary revision"
+);
+expect(
+  packageSource,
+  /"tauri:dev"\s*:\s*"bun tauri dev"/,
+  "development must invoke Tauri through Bun"
+);
+expect(
+  packageSource,
+  /"tauri:build"\s*:\s*"bun tauri build/,
+  "build must invoke Tauri through Bun"
+);
 expect(packageSource, /universal-apple-darwin/, "build must produce a universal macOS binary");
 expect(packageSource, /"format:check"/, "formatter check command is missing");
 expect(packageSource, /"lint"/, "lint command is missing");
@@ -51,27 +63,45 @@ if (JSON.stringify(productionDependencies) !== JSON.stringify(allowedProductionD
 }
 
 expect(packageSource, /"tailwindcss"\s*:\s*"/, "Tailwind CSS dev dependency is missing");
-expect(packageSource, /"@tailwindcss\/vite"\s*:\s*"/, "@tailwindcss/vite dev dependency is missing");
+expect(
+  packageSource,
+  /"@tailwindcss\/vite"\s*:\s*"/,
+  "@tailwindcss/vite dev dependency is missing"
+);
 
 for (const forbidden of ["react", "react-dom", "@vitejs/plugin-react"]) {
-  if (packageSource.includes(`"${forbidden}"`)) failures.push(`${forbidden} must be removed from the Svelte rewrite`);
+  if (packageSource.includes(`"${forbidden}"`))
+    failures.push(`${forbidden} must be removed from the Svelte rewrite`);
 }
 
 expect(packageSource, /"svelte"\s*:\s*"5\./, "Svelte 5 dependency is missing");
 expect(viteConfig, /@sveltejs\/vite-plugin-svelte/, "Vite must use the official Svelte plugin");
 expect(tauriConfig, /"signingIdentity"\s*:\s*"-"/, "macOS app must be ad-hoc signed");
 expect(cargo, /tauri\s*=\s*\{?[^\n]*version\s*=\s*"2/, "Cargo must use Tauri 2");
-expect(tauriConfig, /"targets"\s*:\s*\[\s*"app"\s*,\s*"dmg"\s*\]/s, "bundle targets must be app and dmg");
-expect(tauriConfig, /"identifier"\s*:\s*"ai\.learningflow\.caffeinate"/, "bundle identifier is missing");
+expect(
+  tauriConfig,
+  /"targets"\s*:\s*\[\s*"app"\s*,\s*"dmg"\s*\]/s,
+  "bundle targets must be app and dmg"
+);
+expect(
+  tauriConfig,
+  /"identifier"\s*:\s*"ai\.learningflow\.caffeinate"/,
+  "bundle identifier is missing"
+);
 expect(backend, /\/usr\/bin\/caffeinate/, "backend must call the fixed macOS caffeinate binary");
 expect(backend, /Command::new\(CAFFEINATE_PATH\)/, "backend must spawn directly with Command::new");
 expect(backend, /try_wait\(/, "backend must reconcile timed child exit");
 expect(backend, /\.child\s*\.\s*kill\(/s, "backend must kill the child on stop");
 expect(lifecycle, /RunEvent::Exit/, "application exit cleanup is missing");
 expect(lifecycle, /cleanup\(/, "exit event must call cleanup");
-expect(backend, /#\[serde\(rename_all = "camelCase"\)\]/, "Rust command/status contract must remain camelCase");
+expect(
+  backend,
+  /#\[serde\(rename_all = "camelCase"\)\]/,
+  "Rust command/status contract must remain camelCase"
+);
 for (const field of ["keepDisplayAwake", "timeoutSeconds", "startedAtUnixMs", "remainingSeconds"]) {
-  if (!client.includes(field)) failures.push(`frontend Tauri contract is missing camelCase field ${field}`);
+  if (!client.includes(field))
+    failures.push(`frontend Tauri contract is missing camelCase field ${field}`);
 }
 if (/keep_display_awake|timeout_seconds|started_at_unix_ms|remaining_seconds/.test(client + app)) {
   failures.push("frontend Tauri payload/status fields must match Rust camelCase serde contract");
@@ -124,4 +154,6 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log("Contract passed: Svelte frontend, fixed-process safety, local-only scope, coverage policy, and lightweight dependency boundary are intact.");
+console.log(
+  "Contract passed: Svelte frontend, fixed-process safety, local-only scope, coverage policy, and lightweight dependency boundary are intact."
+);

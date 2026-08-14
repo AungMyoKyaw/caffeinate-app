@@ -121,7 +121,9 @@ button {
   border-bottom: 1px solid transparent;
   background: rgba(244, 240, 231, 0.93);
   backdrop-filter: blur(14px);
-  transition: border-color 180ms ease, box-shadow 180ms ease;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
 }
 
 .site-header.is-scrolled {
@@ -199,7 +201,11 @@ button {
   font-weight: 720;
   letter-spacing: -0.015em;
   text-decoration: none;
-  transition: transform 160ms ease, background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+  transition:
+    transform 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease;
 }
 
 .header-download {
@@ -857,7 +863,9 @@ pre code {
   opacity: 0;
   transform: translateY(12px);
   pointer-events: none;
-  transition: opacity 160ms ease, transform 160ms ease;
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
 }
 
 .toast.is-visible {

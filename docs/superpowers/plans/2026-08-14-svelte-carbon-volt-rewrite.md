@@ -22,6 +22,7 @@
 ### Task 1: Tooling and Svelte entry point
 
 **Files:**
+
 - Modify: `package.json`
 - Modify: `index.html`
 - Modify: `vite.config.ts`
@@ -30,6 +31,7 @@
 - Delete: `src/main.tsx`
 
 **Interfaces:**
+
 - Produces: Vite compiles `src/App.svelte` and Tauri still serves port 1420 / `dist`.
 
 - [ ] Replace React/React DOM and the React Vite plugin with Svelte and the official Svelte Vite plugin.
@@ -43,6 +45,7 @@
 ### Task 2: Testable frontend domain and bridge
 
 **Files:**
+
 - Modify: `src/lib/caffeinate.ts`
 - Rewrite: `src/lib/format.ts`
 - Create: `src/lib/presentation.ts`
@@ -51,6 +54,7 @@
 - Create: `src/lib/presentation.test.ts`
 
 **Interfaces:**
+
 - Produces: `createCaffeinateClient(invoke)`, `caffeinateClient`, duration helpers, command preview helpers, and pure presentation helpers.
 
 - [ ] Define a minimal `InvokeLike` boundary and inject it into `createCaffeinateClient` so all bridge calls are testable without Tauri.
@@ -63,12 +67,14 @@
 ### Task 3: Carbon + Volt Svelte control surface
 
 **Files:**
+
 - Create: `src/App.svelte`
 - Rewrite: `src/styles.css`
 - Delete: `src/App.tsx`
 - Create: `src/App.test.ts`
 
 **Interfaces:**
+
 - Consumes: typed client and pure helpers from Task 2.
 - Produces: ready, checking, busy, active, timed-active, and error UI states.
 
@@ -85,6 +91,7 @@
 ### Task 4: Contract, documentation, diagrams, and CI
 
 **Files:**
+
 - Modify: `scripts/verify-contract.mjs`
 - Rewrite: `DESIGN.md`
 - Rewrite: `RALPH_LOOP.md`
@@ -98,6 +105,7 @@
 - Rewrite: `docs/preview.html`
 
 **Interfaces:**
+
 - Produces: repository contract checks aligned to Svelte, contributor diagrams, reproducible CI, and a no-build visual fixture matching the production CSS.
 
 - [ ] Update repository contract from `App.tsx` to `App.svelte`, assert Svelte and forbid React/runtime bloat.
@@ -111,6 +119,7 @@
 ### Task 5: Release Ralph loop and bundle
 
 **Files:**
+
 - Update: `RALPH_RUN_LOG.md`
 - Generate: `coverage/` when tooling is available
 - Generate: `docs/screenshots/svelte-ready.png`
@@ -118,6 +127,7 @@
 - Generate: `Caffeinate-macOS-svelte.bundle`
 
 **Interfaces:**
+
 - Produces: evidence-backed final repository and complete Git bundle.
 
 - [ ] Run formatter check, linter, Svelte/type checker, full tests, skipped/focused-test scan, coverage, production build, contract, Rust fmt/test/clippy, dependency audit, and docs checks where the environment supports them.

@@ -23,11 +23,13 @@
 ### Task 1: Repository and product contract
 
 **Files:**
+
 - Create: `package.json`, `bunfig.toml`, TypeScript/Vite configuration
 - Create: `PRODUCT.md`, `DESIGN.md`, `RALPH_LOOP.md`
 - Create: `scripts/verify-contract.mjs`
 
 **Interfaces:**
+
 - Produces: deterministic repository constraints consumed by all later tasks.
 
 - [ ] Write a failing contract validator for required Tauri, Bun, lifecycle, and UI markers.
@@ -38,11 +40,13 @@
 ### Task 2: Rust caffeinate controller
 
 **Files:**
+
 - Create: `src-tauri/Cargo.toml`, `src-tauri/build.rs`, `src-tauri/tauri.conf.json`
 - Create: `src-tauri/src/main.rs`, `src-tauri/src/lib.rs`, `src-tauri/src/caffeinate.rs`
 - Create: `src-tauri/capabilities/default.json`
 
 **Interfaces:**
+
 - Produces commands `start_caffeinate`, `stop_caffeinate`, `get_caffeinate_status`.
 - Produces camelCase `CaffeinateStatus` matching the frontend contract.
 
@@ -55,10 +59,12 @@
 ### Task 3: Frontend control surface
 
 **Files:**
+
 - Create: `index.html`, `src/main.tsx`, `src/App.tsx`, `src/styles.css`
 - Create: `src/lib/caffeinate.ts`, `src/lib/format.ts`, `src/lib/format.test.ts`
 
 **Interfaces:**
+
 - Consumes: the three Tauri commands and shared data contracts.
 - Produces: keyboard-accessible single-window UI.
 
@@ -71,10 +77,12 @@
 ### Task 4: Icons, preview, and documentation
 
 **Files:**
+
 - Create: `src-tauri/icons/*`, `docs/preview.html`, `docs/screenshots/*`
 - Create: `README.md`, `CHANGELOG.md`, `LICENSE`
 
 **Interfaces:**
+
 - Produces: build instructions, app assets, and deterministic visual fixtures.
 
 - [ ] Generate a source icon and macOS bundle icons.
@@ -86,10 +94,12 @@
 ### Task 5: Ralph verification and release source archive
 
 **Files:**
+
 - Update: `RALPH_RUN_LOG.md`
 - Create: release ZIP and SHA-256 file outside the repository.
 
 **Interfaces:**
+
 - Produces: a clean, user-downloadable source package.
 
 - [ ] Run the repository contract validator.

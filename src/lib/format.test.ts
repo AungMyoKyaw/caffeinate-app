@@ -3,7 +3,9 @@ import { buildCommandPreview, DURATION_PRESETS, formatRemaining } from "./format
 
 describe("duration presets", () => {
   it("exposes the exact supported session choices", () => {
-    expect(DURATION_PRESETS.map(({ label, shortLabel, seconds }) => ({ label, shortLabel, seconds }))).toEqual([
+    expect(
+      DURATION_PRESETS.map(({ label, shortLabel, seconds }) => ({ label, shortLabel, seconds }))
+    ).toEqual([
       { label: "Until stopped", shortLabel: "Until stopped", seconds: null },
       { label: "30 minutes", shortLabel: "30m", seconds: 1800 },
       { label: "1 hour", shortLabel: "1h", seconds: 3600 },
@@ -34,9 +36,7 @@ describe("buildCommandPreview", () => {
   });
 
   it("adds display and timeout flags only when requested", () => {
-    expect(buildCommandPreview(true, 3600)).toBe(
-      "/usr/bin/caffeinate -i -d -t 3600 -w <app-pid>"
-    );
+    expect(buildCommandPreview(true, 3600)).toBe("/usr/bin/caffeinate -i -d -t 3600 -w <app-pid>");
   });
 
   it("supports a bounded timeout without display assertion", () => {

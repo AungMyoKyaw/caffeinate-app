@@ -57,11 +57,7 @@ describe("getStateCopy", () => {
 
   it("describes display-awake and timed sessions", () => {
     expect(
-      getStateCopy(
-        { ...active, keepDisplayAwake: true, remainingSeconds: 3600 },
-        false,
-        false
-      )
+      getStateCopy({ ...active, keepDisplayAwake: true, remainingSeconds: 3600 }, false, false)
     ).toMatchObject({
       detail: "System and display sleep are blocked. 1h remaining."
     });
