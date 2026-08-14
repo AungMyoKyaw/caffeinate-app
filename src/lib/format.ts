@@ -1,9 +1,9 @@
-export type DurationPreset = {
+export interface DurationPreset {
   id: string;
   label: string;
   shortLabel: string;
   seconds: number | null;
-};
+}
 
 export const DURATION_PRESETS: readonly DurationPreset[] = [
   { id: "until-stopped", label: "Until stopped", shortLabel: "Until stopped", seconds: null },
@@ -26,7 +26,10 @@ export function formatRemaining(seconds: number | null): string {
   return `${hours}h ${minutes}m remaining`;
 }
 
-export function buildCommandPreview(keepDisplayAwake: boolean, timeoutSeconds: number | null): string {
+export function buildCommandPreview(
+  keepDisplayAwake: boolean,
+  timeoutSeconds: number | null
+): string {
   const args = ["-i"];
   if (keepDisplayAwake) args.push("-d");
   if (timeoutSeconds !== null) args.push("-t", String(timeoutSeconds));

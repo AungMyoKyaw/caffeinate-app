@@ -9,10 +9,10 @@
   import { buildCommandPreview, DURATION_PRESETS } from "./lib/format";
   import { getStateCopy } from "./lib/presentation";
 
-  type Props = {
+  interface Props {
     client?: CaffeinateClient;
     pollIntervalMs?: number;
-  };
+  }
 
   let { client = caffeinateClient, pollIntervalMs = 1000 }: Props = $props();
 
@@ -285,7 +285,7 @@
             ? 'border-rule bg-surface-muted'
             : 'border-rule-strong'}"
         >
-          {#each DURATION_PRESETS as preset}
+          {#each DURATION_PRESETS as preset (preset.id)}
             <label class={durationCellClass(preset)}>
               <input
                 aria-label={preset.label}

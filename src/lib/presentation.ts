@@ -1,12 +1,12 @@
 import type { CaffeinateStatus } from "./caffeinate";
 import { formatRemaining } from "./format";
 
-export type StateCopy = {
+export interface StateCopy {
   statusLabel: string;
   title: string;
   detail: string;
   actionLabel: string;
-};
+}
 
 export function getStateCopy(
   status: CaffeinateStatus,

@@ -1,26 +1,26 @@
 import { invoke } from "@tauri-apps/api/core";
 
-export type StartOptions = {
+export interface StartOptions {
   keepDisplayAwake: boolean;
   timeoutSeconds: number | null;
-};
+}
 
-export type CaffeinateStatus = {
+export interface CaffeinateStatus {
   active: boolean;
   keepDisplayAwake: boolean;
   startedAtUnixMs: number | null;
   timeoutSeconds: number | null;
   remainingSeconds: number | null;
   command: string;
-};
+}
 
 export type InvokeLike = <T>(command: string, args?: Record<string, unknown>) => Promise<T>;
 
-export type CaffeinateClient = {
+export interface CaffeinateClient {
   start(options: StartOptions): Promise<CaffeinateStatus>;
   stop(): Promise<CaffeinateStatus>;
   status(): Promise<CaffeinateStatus>;
-};
+}
 
 export const EMPTY_STATUS: CaffeinateStatus = {
   active: false,

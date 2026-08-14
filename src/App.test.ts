@@ -22,7 +22,7 @@ const active: CaffeinateStatus = {
   command: "/usr/bin/caffeinate -i -w 42"
 };
 
-const components: Array<ReturnType<typeof mount>> = [];
+const components: ReturnType<typeof mount>[] = [];
 
 function makeClient(statusResult: CaffeinateStatus = idle) {
   const start = vi
@@ -123,6 +123,9 @@ describe("App", () => {
     window.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter", bubbles: true }));
     expect(start).not.toHaveBeenCalled();
 
+    window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true, bubbles: true }));
+    expect(start).not.toHaveBeenCalled();
+
     const event = new KeyboardEvent("keydown", {
       key: "Enter",
       metaKey: true,
@@ -205,5 +208,24 @@ describe("App", () => {
     await vi.waitFor(() => {
       expect(document.body.textContent).toContain("Mac can sleep.");
     });
+  });
+
+  it("ignores repeated actions while a transition is busy", async () => {
+    const { client, start } = makeClient();
+    await render(client);
+    start.mockReturnValueOnce(new Promise<CaffeinateStatus>(() => undefined));
+
+    powerButton().click();
+    await tick();
+    window.dispatchEvent(
+      new KeyboardEvent("keydown", {
+        key: "Enter",
+        metaKey: true,
+        bubbles: true,
+        cancelable: true
+      })
+    );
+
+    expect(start).toHaveBeenCalledOnce();
   });
 });
