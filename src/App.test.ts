@@ -181,8 +181,8 @@ describe("App", () => {
     expect(start).not.toHaveBeenCalled();
 
     resolveStatus?.(idle);
-    await Promise.resolve();
-    await tick();
-    expect(document.body.textContent).toContain("Mac can sleep.");
+    await vi.waitFor(() => {
+      expect(document.body.textContent).toContain("Mac can sleep.");
+    });
   });
 });

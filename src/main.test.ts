@@ -23,7 +23,7 @@ describe("application bootstrap", () => {
     await Promise.resolve();
     await tick();
 
-    expect(document.querySelector(".app-shell")).not.toBeNull();
+    expect(document.querySelector("#app")?.children).toHaveLength(1);
     expect(invoke).toHaveBeenCalledWith("get_caffeinate_status");
   });
 
