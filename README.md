@@ -2,8 +2,8 @@
 
 A lightweight Tauri + Svelte utility that owns macOS's built-in `/usr/bin/caffeinate` process so one wake session is easy to start, understand, and stop.
 
-| Ready | Awake |
-| :---: | :---: |
+|                            Ready                             |                             Awake                              |
+| :----------------------------------------------------------: | :------------------------------------------------------------: |
 | ![Caffeinate ready state](docs/screenshots/svelte-ready.png) | ![Caffeinate active state](docs/screenshots/svelte-active.png) |
 
 ## Features
@@ -101,19 +101,19 @@ There are no runtime environment variables, API keys, accounts, or remote servic
 
 ## Common commands
 
-| Task | Command |
-| --- | --- |
-| Develop | `bun tauri dev` |
-| Format | `bun run format` |
-| Format check | `bun run format:check` |
-| Lint | `bun run lint` |
-| Type/Svelte check | `bun run typecheck` |
-| Test | `bun run test` |
-| Coverage | `bun run coverage` |
-| Build frontend | `bun run build` |
-| Package macOS | `bun run tauri:build` |
-| Clean | `bun run clean` |
-| Full frontend verification | `bun run verify` |
+| Task                       | Command                |
+| -------------------------- | ---------------------- |
+| Develop                    | `bun tauri dev`        |
+| Format                     | `bun run format`       |
+| Format check               | `bun run format:check` |
+| Lint                       | `bun run lint`         |
+| Type/Svelte check          | `bun run typecheck`    |
+| Test                       | `bun run test`         |
+| Coverage                   | `bun run coverage`     |
+| Build frontend             | `bun run build`        |
+| Package macOS              | `bun run tauri:build`  |
+| Clean                      | `bun run clean`        |
+| Full frontend verification | `bun run verify`       |
 
 ## Testing
 
@@ -163,7 +163,7 @@ Expected paths:
 
 ```text
 src-tauri/target/universal-apple-darwin/release/bundle/macos/Caffeinate.app
-src-tauri/target/universal-apple-darwin/release/bundle/dmg/Caffeinate_1.0.0_*.dmg
+src-tauri/target/universal-apple-darwin/release/bundle/dmg/Caffeinate_2.0.0_*.dmg
 ```
 
 The repository currently uses ad-hoc signing (`signingIdentity: "-"`). Public notarized distribution requires an Apple Developer signing/notarization setup.

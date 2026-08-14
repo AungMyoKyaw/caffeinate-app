@@ -1,9 +1,11 @@
 # Changelog
 
-## Unreleased — Svelte rewrite
+## 2.0.0 — 2026-08-15
 
 - Replaced the React frontend with Svelte 5 and the official Svelte Vite plugin.
 - Introduced the Carbon + Volt control surface with stronger ready/awake state hierarchy, a visible duration rail, light/dark appearance, and compact-window handling.
+- Added Tailwind CSS v4 build-time styling with the Carbon + Volt design tokens defined in the `@theme` block.
+- Rebalanced the normal window interface with appropriate sizing and normalized Dock icon optical size.
 - Added injectable Tauri client boundaries and expanded frontend unit/component/bootstrap tests.
 - Added Prettier, ESLint/Svelte, Svelte Check, Vitest V8 coverage thresholds, and focused-test protection.
 - Added architecture diagrams, dependency and lightweight measurement notes, open-source contributor/security documents, and updated CI verification flow.

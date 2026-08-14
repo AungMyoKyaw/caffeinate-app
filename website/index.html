@@ -67,19 +67,27 @@
             <p class="eyebrow"><span class="signal" aria-hidden="true"></span> macOS utility</p>
             <h1 id="hero-title">Your Mac sleeps when you say so.</h1>
             <p class="hero-lede">
-              Caffeinate keeps long builds, downloads, renders, uploads, and remote sessions running without changing your permanent power settings.
+              Caffeinate keeps long builds, downloads, renders, uploads, and remote sessions running
+              without changing your permanent power settings.
             </p>
             <div class="hero-actions">
-              <a class="button button-primary" href="./downloads/Caffeinate.dmg" download data-dmg-link>
+              <a
+                class="button button-primary"
+                href="./downloads/Caffeinate.dmg"
+                download
+                data-dmg-link
+              >
                 <svg aria-hidden="true" viewBox="0 0 24 24" width="21" height="21">
                   <path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14" />
                 </svg>
                 Download for macOS
               </a>
-              <a class="text-link" href="#install">See install options <span aria-hidden="true">↘</span></a>
+              <a class="text-link" href="#install"
+                >See install options <span aria-hidden="true">↘</span></a
+              >
             </div>
             <p class="release-note">
-              <span data-version>Version 1.0.0</span>
+              <span data-version>Version 2.0.0</span>
               <span aria-hidden="true">·</span>
               <span data-macos>macOS 12 or later</span>
             </p>
@@ -114,7 +122,8 @@
               <h2 id="demo-title">See exactly what your Mac is doing.</h2>
             </div>
             <p>
-              The interface gives you one unmistakable action and the exact system command behind it.
+              The interface gives you one unmistakable action and the exact system command behind
+              it.
             </p>
           </div>
 
@@ -148,7 +157,12 @@
           </div>
 
           <div class="demo-frame">
-            <figure id="ready-panel" role="tabpanel" aria-labelledby="ready-tab" data-demo-panel="ready">
+            <figure
+              id="ready-panel"
+              role="tabpanel"
+              aria-labelledby="ready-tab"
+              data-demo-panel="ready"
+            >
               <img
                 src="assets/caffeinate-ready.png"
                 width="1424"
@@ -156,7 +170,9 @@
                 alt="Caffeinate ready state showing sleep allowed and a Keep Mac Awake button"
                 loading="lazy"
               />
-              <figcaption>Ready state — choose a duration, then start one focused session.</figcaption>
+              <figcaption>
+                Ready state — choose a duration, then start one focused session.
+              </figcaption>
             </figure>
             <figure
               id="awake-panel"
@@ -172,7 +188,9 @@
                 alt="Caffeinate awake state showing idle sleep blocked and an Allow Sleep button"
                 loading="lazy"
               />
-              <figcaption>Awake state — the active assertion and stop action remain visible.</figcaption>
+              <figcaption>
+                Awake state — the active assertion and stop action remain visible.
+              </figcaption>
             </figure>
           </div>
         </div>
@@ -192,22 +210,34 @@
             <article class="feature-row">
               <p class="feature-number">01</p>
               <h3>One clear switch</h3>
-              <p>Start or stop the awake session from a single primary control. Use <kbd>⌘</kbd><kbd>↵</kbd> when your hands are already on the keyboard.</p>
+              <p>
+                Start or stop the awake session from a single primary control. Use <kbd>⌘</kbd
+                ><kbd>↵</kbd> when your hands are already on the keyboard.
+              </p>
             </article>
             <article class="feature-row">
               <p class="feature-number">02</p>
               <h3>Finite when you need it</h3>
-              <p>Run until stopped or choose 30 minutes, 1 hour, 2 hours, or 4 hours. The app reports the remaining state without hiding it in a menu.</p>
+              <p>
+                Run until stopped or choose 30 minutes, 1 hour, 2 hours, or 4 hours. The app reports
+                the remaining state without hiding it in a menu.
+              </p>
             </article>
             <article class="feature-row">
               <p class="feature-number">03</p>
               <h3>Display stays optional</h3>
-              <p>Idle system sleep is blocked by default. Keeping the display on is a separate choice, so the safe setting remains the easy setting.</p>
+              <p>
+                Idle system sleep is blocked by default. Keeping the display on is a separate
+                choice, so the safe setting remains the easy setting.
+              </p>
             </article>
             <article class="feature-row">
               <p class="feature-number">04</p>
               <h3>No network required</h3>
-              <p>Caffeinate manages a built-in macOS command locally. There is no account, telemetry, cloud service, or hidden background session after the app exits.</p>
+              <p>
+                Caffeinate manages a built-in macOS command locally. There is no account, telemetry,
+                cloud service, or hidden background session after the app exits.
+              </p>
             </article>
           </div>
         </div>
@@ -221,7 +251,8 @@
           </div>
           <div class="command-copy">
             <p>
-              Caffeinate owns a fixed `/usr/bin/caffeinate` process and ties it to the application lifecycle. Close the app and the assertion ends.
+              Caffeinate owns a fixed `/usr/bin/caffeinate` process and ties it to the application
+              lifecycle. Close the app and the assertion ends.
             </p>
             <pre><code><span class="prompt">$</span> /usr/bin/caffeinate -i -w &lt;app-pid&gt;</code></pre>
           </div>
@@ -250,7 +281,12 @@
                 <li>Drag Caffeinate into Applications.</li>
                 <li>Open it and start an awake session.</li>
               </ol>
-              <a class="button button-dark" href="./downloads/Caffeinate.dmg" download data-dmg-link>
+              <a
+                class="button button-dark"
+                href="./downloads/Caffeinate.dmg"
+                download
+                data-dmg-link
+              >
                 Download Caffeinate.dmg
                 <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20">
                   <path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14" />
@@ -261,14 +297,18 @@
             <article class="install-method" data-brew-method>
               <div class="install-method-top">
                 <p class="method-label">Homebrew Cask</p>
-                <span class="status-badge status-pending" data-brew-status>Publishing in progress</span>
+                <span class="status-badge status-pending" data-brew-status
+                  >Publishing in progress</span
+                >
               </div>
               <h3>Install from Terminal</h3>
               <p class="brew-description" data-brew-description>
                 Install or update Caffeinate through Homebrew with one command.
               </p>
               <div class="command-box" data-command-box>
-                <code data-brew-command>brew install --cask AungMyoKyaw/homebrew-tap/caffeinate</code>
+                <code data-brew-command
+                  >brew install --cask AungMyoKyaw/homebrew-tap/caffeinate</code
+                >
                 <button type="button" data-copy-brew disabled>
                   <span data-copy-label>Not available</span>
                   <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18">
@@ -279,7 +319,6 @@
               </div>
             </article>
           </div>
-
         </div>
       </section>
 
@@ -292,11 +331,17 @@
           <div class="faq-list">
             <details>
               <summary>Does Caffeinate keep working after I close it?</summary>
-              <p>No. Closing the application releases its sleep assertion. It does not leave a hidden background process running by design.</p>
+              <p>
+                No. Closing the application releases its sleep assertion. It does not leave a hidden
+                background process running by design.
+              </p>
             </details>
             <details>
               <summary>Can it keep the screen on?</summary>
-              <p>Yes. “Keep display on” is an optional setting. The default session blocks idle system sleep while still allowing the display to turn off.</p>
+              <p>
+                Yes. “Keep display on” is an optional setting. The default session blocks idle
+                system sleep while still allowing the display to turn off.
+              </p>
             </details>
             <details>
               <summary>Does it prevent sleep when the MacBook lid is closed?</summary>
@@ -304,7 +349,10 @@
             </details>
             <details>
               <summary>Does the application send any data?</summary>
-              <p>No. The application is designed to work locally without accounts, telemetry, or network requests.</p>
+              <p>
+                No. The application is designed to work locally without accounts, telemetry, or
+                network requests.
+              </p>
             </details>
           </div>
         </div>

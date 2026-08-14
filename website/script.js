@@ -2,7 +2,7 @@
   "use strict";
 
   const config = window.CAFFEINATE_SITE ?? {
-    version: "1.0.0",
+    version: "2.0.0",
     minimumMacOS: "macOS 13 or later",
     dmgUrl: "./downloads/Caffeinate.dmg",
     brew: {
@@ -110,7 +110,8 @@
     brewStatus?.classList.add("is-available");
     if (brewStatus) brewStatus.textContent = "Available";
     if (brewDescription) {
-      brewDescription.textContent = "Install or update Caffeinate through Homebrew with one command.";
+      brewDescription.textContent =
+        "Install or update Caffeinate through Homebrew with one command.";
     }
     if (copyBrew instanceof HTMLButtonElement) copyBrew.disabled = false;
     if (copyLabel) copyLabel.textContent = "Copy command";
