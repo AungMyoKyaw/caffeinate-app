@@ -25,7 +25,9 @@ const active: CaffeinateStatus = {
 const components: Array<ReturnType<typeof mount>> = [];
 
 function makeClient(statusResult: CaffeinateStatus = idle) {
-  const start = vi.fn<(options: StartOptions) => Promise<CaffeinateStatus>>().mockResolvedValue(active);
+  const start = vi
+    .fn<(options: StartOptions) => Promise<CaffeinateStatus>>()
+    .mockResolvedValue(active);
   const stop = vi.fn<() => Promise<CaffeinateStatus>>().mockResolvedValue(idle);
   const status = vi.fn<() => Promise<CaffeinateStatus>>().mockResolvedValue(statusResult);
   return { client: { start, stop, status }, start, stop, status };
