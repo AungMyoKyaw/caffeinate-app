@@ -66,7 +66,7 @@ describe("App", () => {
 
     expect(status).toHaveBeenCalledOnce();
     expect(target.textContent).toContain("Mac can sleep.");
-    expect(target.textContent).toContain("Keep Mac Awake");
+    expect(powerButton().getAttribute("aria-label")).toBe("Keep Mac Awake");
     expect(target.textContent).toContain("/usr/bin/caffeinate -i -w <app-pid>");
     expect(target.querySelector('[aria-live="polite"]')).not.toBeNull();
   });

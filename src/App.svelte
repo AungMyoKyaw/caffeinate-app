@@ -239,10 +239,7 @@
           {/if}
         </button>
 
-        <div class="action-label mt-3 flex flex-col items-center gap-[3px] text-center">
-          <strong class="text-[12.5px] font-semibold leading-[1.2]">{copy.actionLabel}</strong>
-          <span class="text-[10.5px] leading-[1.2] text-quiet">⌘ Return</span>
-        </div>
+        <span class="mt-3 text-[10.5px] leading-[1.2] text-quiet">⌘ Return</span>
       </div>
     </section>
 

@@ -77,7 +77,7 @@ No navigation, cards grid, sidebar, decorative hero, or marketing content.
 
 ### Signature interaction
 
-The primary action is a 124 px circular control. Ready state uses a restrained carbon ring and a power glyph. Active state becomes a solid Volt control with a second state ring and explicit text. The visual change is paired with copy (`Mac can sleep.` → `Mac stays awake.`), status text (`Ready` → `Awake`), and the action label (`Keep Mac Awake` → `Allow Sleep`) so state is never color-only.
+The primary action is a 124 px circular control. Ready state uses a restrained carbon ring and a power glyph. Active state becomes a solid Volt control with a second state ring and explicit text. The visual change is paired with copy (`Mac can sleep.` → `Mac stays awake.`) and status text (`Ready` → `Awake`) so state is never color-only. The action label (`Keep Mac Awake` → `Allow Sleep`) lives on as the control's accessible name; beneath the control only the `⌘ Return` shortcut hint is shown.
 
 The duration selector becomes a five-segment radio rail: `Until stopped`, `30m`, `1h`, `2h`, `4h`. It is faster to scan than a select and remains a single lightweight native form group. The left copy shows the current selection as a small Volt-dot pill so the Duration row carries the same visual weight as the Keep-display-on row beneath it.
 
