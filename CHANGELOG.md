@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.1.0 — 2026-08-16
+
+- Removed the text label under the power control (`Keep Mac Awake` / `Allow Sleep`), which read as a status and clashed with the adjacent awake-state copy. The control keeps the action name as its accessible label, and state stays conveyed by the status text and Volt styling.
+- Reformatted Tauri regenerated schema files.
+
 ## 2.0.0 — 2026-08-15
 
 - Replaced the React frontend with Svelte 5 and the official Svelte Vite plugin.

@@ -18,7 +18,7 @@ Edit `site-config.js`:
 
 ```js
 window.CAFFEINATE_SITE = Object.freeze({
-  version: "2.0.0",
+  version: "2.1.0",
   minimumMacOS: "macOS 12 or later",
   dmgUrl: "./downloads/Caffeinate.dmg",
   brew: Object.freeze({

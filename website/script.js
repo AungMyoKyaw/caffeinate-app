@@ -2,7 +2,7 @@
   "use strict";
 
   const config = window.CAFFEINATE_SITE ?? {
-    version: "2.0.0",
+    version: "2.1.0",
     minimumMacOS: "macOS 13 or later",
     dmgUrl: "./downloads/Caffeinate.dmg",
     brew: {

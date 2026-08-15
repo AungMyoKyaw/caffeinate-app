@@ -163,7 +163,7 @@ Expected paths:
 
 ```text
 src-tauri/target/universal-apple-darwin/release/bundle/macos/Caffeinate.app
-src-tauri/target/universal-apple-darwin/release/bundle/dmg/Caffeinate_2.0.0_*.dmg
+src-tauri/target/universal-apple-darwin/release/bundle/dmg/Caffeinate_2.1.0_*.dmg
 ```
 
 The repository currently uses ad-hoc signing (`signingIdentity: "-"`). Public notarized distribution requires an Apple Developer signing/notarization setup.

@@ -1,7 +1,7 @@
 {
   "name": "caffeinate-macos",
   "private": true,
-  "version": "2.0.0",
+  "version": "2.1.0",
   "type": "module",
   "packageManager": "bun@1.4.0-canary.1+032b8dbf1",
   "scripts": {
