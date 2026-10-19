@@ -10,7 +10,7 @@ A quiet, local-first macOS app for keeping your Mac awake while your work finish
 
 [Website preview](website/) · [Product video (Remotion)](marketing/remotion/) · [Published releases](https://github.com/AungMyoKyaw/caffeinate-app/releases) · [Report an issue](https://github.com/AungMyoKyaw/caffeinate-app/issues)
 
-**Caffeinate 3.0.0-beta.0 · In development · macOS 12+**
+**Caffeinate 3.0.0 · Stable · macOS 12+**
 
 </div>
 
@@ -47,7 +47,7 @@ Every screenshot below comes from the actual macOS beta, captured on **19 Octobe
 
 Unedited original captures, the cropped PNGs, and website-optimized images are indexed in [the screenshot archive](docs/screenshots/v3/README.md).
 
-## Features in 3.0 beta
+## Features in 3.0
 
 - **System, Display, or Both:** prevent idle system sleep, display sleep, or both with typed options mapped to Apple's `-i` and `-d` flags.
 - **A timer that fits your work:** until stopped, 30 minutes, 1 hour, 2 hours, 4 hours, or any custom duration from 1–1440 minutes.
@@ -68,15 +68,15 @@ Caffeinate blocks _idle_ sleep; it **cannot override normal MacBook lid-close sl
 
 ### Published version
 
-The 3.0 redesign is currently a **local beta**, not a publicly published 3.0 release. To install the existing published version instead, use [GitHub Releases](https://github.com/AungMyoKyaw/caffeinate-app/releases) or the published Homebrew cask:
+Install the latest stable Caffeinate 3.0 release from [GitHub Releases](https://github.com/AungMyoKyaw/caffeinate-app/releases) or Homebrew:
 
 ```bash
 brew install --cask AungMyoKyaw/homebrew-tap/caffeinate
 ```
 
-The currently published version and the 3.0 beta may have **different UI and features**. The screenshots above show 3.0.
+The screenshots above show the current stable 3.0 interface.
 
-### Run the 3.0 beta from source
+### Build from source
 
 On a Mac with Xcode Command Line Tools, Rust stable, and Bun installed:
 
@@ -87,15 +87,13 @@ bun install --frozen-lockfile
 bun tauri dev
 ```
 
-The public repository may not yet contain the local beta changes shown here. If working from the existing local project directory, run the final two commands there instead.
-
 To build an Apple Silicon `.app` and DMG locally:
 
 ```bash
 bun tauri build --bundles app,dmg --target aarch64-apple-darwin
 ```
 
-For a universal Intel + Apple Silicon build, configure both Rust targets and run `bun run tauri:build`. Local beta bundles currently use ad-hoc signing; notarized public distribution requires a separately authorized release and Apple signing setup.
+For a universal Intel + Apple Silicon build, configure both Rust targets and run `bun run tauri:build`. Release bundles use ad-hoc signing. Gatekeeper notarization is not configured.
 
 ## Under the hood
 
@@ -133,7 +131,7 @@ There are no remote APIs, accounts, analytics SDKs, or external runtime services
 | Validate website            | `python3 website/scripts/validate_site.py`              |
 | Validate website references | `python3 website/scripts/check_links.py`                |
 
-The frontend's **100% statements, branches, functions and lines** coverage threshold is intentionally strict and **not yet met** for this beta. The test suite passing does not mean every release gate is complete. See [UI audit and fixes](docs/redesign/UI-CONTROLS-AUDIT-FIXES.md) and the [approved 3.0 PRD](docs/redesign/PRD.md).
+The frontend's strict **100% statements, branches, functions and lines** coverage target is not met. Latest local verification reported 97.24% statements, 91.38% branches, 97.14% functions and 98.14% lines. Automated tests pass; native VoiceOver, low-battery notification, sleep/wake, login-at-start, and release-signing checks remain outside that suite. See [UI audit and fixes](docs/redesign/UI-CONTROLS-AUDIT-FIXES.md) and the [approved 3.0 PRD](docs/redesign/PRD.md).
 
 ### Repository map
 

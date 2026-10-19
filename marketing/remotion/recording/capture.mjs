@@ -1,47 +1,78 @@
-import {chromium} from "playwright";
+import { chromium } from "playwright";
 import fs from "node:fs";
 import path from "node:path";
 const out = path.resolve(import.meta.dirname, "../public/footage");
-fs.mkdirSync(out, {recursive:true});
-const browser=await chromium.launch({headless:true, executablePath:"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", args:["--no-sandbox","--hide-scrollbars"]});
-const context=await browser.newContext({viewport:{width:1440,height:900},deviceScaleFactor:1,recordVideo:{dir:out,size:{width:1440,height:900}},reducedMotion:"no-preference"});
-const page=await context.newPage();
-const captureStart=Date.now();
-const cursorEvents=[];
-page.on("pageerror", e=>console.error("PAGE:",e.message));
-await page.goto("http://127.0.0.1:1420/marketing/remotion/recording/demo.html",{waitUntil:"networkidle"});
-await page.getByRole("heading",{name:"Ready when you are."}).waitFor();
-await page.screenshot({path:path.join(out,"ready.png")});
-const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
-const moveClick=async(role,name,delay=1000)=>{
-  const loc=page.getByRole(role,{name,exact:true}); await loc.waitFor({state:"visible",timeout:10000});
-  await loc.scrollIntoViewIfNeeded(); const b=await loc.boundingBox();
-  if(!b)throw new Error("No bounding box: "+name);
-  const pos={x:Math.round(b.x+b.width/2),y:Math.round(b.y+b.height/2)};
-  cursorEvents.push({t:(Date.now()-captureStart)/1000,x:pos.x-85,y:pos.y+70,kind:"start"});
-  await page.mouse.move(pos.x-85,pos.y+70,{steps:18}); await sleep(180);
-  await page.mouse.move(pos.x,pos.y,{steps:20}); await sleep(240);
-  cursorEvents.push({t:(Date.now()-captureStart)/1000,x:pos.x,y:pos.y,kind:"arrive"});
-  await page.mouse.click(pos.x,pos.y,{delay:120});
-  cursorEvents.push({t:(Date.now()-captureStart)/1000,x:pos.x,y:pos.y,kind:"click",name});
+fs.mkdirSync(out, { recursive: true });
+const browser = await chromium.launch({
+  headless: true,
+  executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+  args: ["--no-sandbox", "--hide-scrollbars"]
+});
+const context = await browser.newContext({
+  viewport: { width: 1440, height: 900 },
+  deviceScaleFactor: 1,
+  recordVideo: { dir: out, size: { width: 1440, height: 900 } },
+  reducedMotion: "no-preference"
+});
+const page = await context.newPage();
+const captureStart = Date.now();
+const cursorEvents = [];
+page.on("pageerror", (e) => console.error("PAGE:", e.message));
+await page.goto("http://127.0.0.1:1420/marketing/remotion/recording/demo.html", {
+  waitUntil: "networkidle"
+});
+await page.getByRole("heading", { name: "Ready when you are." }).waitFor();
+await page.screenshot({ path: path.join(out, "ready.png") });
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const moveClick = async (role, name, delay = 1000) => {
+  const loc = page.getByRole(role, { name, exact: true });
+  await loc.waitFor({ state: "visible", timeout: 10000 });
+  await loc.scrollIntoViewIfNeeded();
+  const b = await loc.boundingBox();
+  if (!b) throw new Error("No bounding box: " + name);
+  const pos = { x: Math.round(b.x + b.width / 2), y: Math.round(b.y + b.height / 2) };
+  cursorEvents.push({
+    t: (Date.now() - captureStart) / 1000,
+    x: pos.x - 85,
+    y: pos.y + 70,
+    kind: "start"
+  });
+  await page.mouse.move(pos.x - 85, pos.y + 70, { steps: 18 });
+  await sleep(180);
+  await page.mouse.move(pos.x, pos.y, { steps: 20 });
+  await sleep(240);
+  cursorEvents.push({ t: (Date.now() - captureStart) / 1000, x: pos.x, y: pos.y, kind: "arrive" });
+  await page.mouse.click(pos.x, pos.y, { delay: 120 });
+  cursorEvents.push({
+    t: (Date.now() - captureStart) / 1000,
+    x: pos.x,
+    y: pos.y,
+    kind: "click",
+    name
+  });
   await sleep(delay);
 };
 await sleep(2300);
-await moveClick("radio","Both",1200);
-await moveClick("radio","30 minutes",950);
-await moveClick("button","Keep Mac Awake",2500);
-await page.getByRole("heading",{name:"Your Mac is staying awake."}).waitFor();
+await moveClick("radio", "Both", 1200);
+await moveClick("radio", "30 minutes", 950);
+await moveClick("button", "Keep Mac Awake", 2500);
+await page.getByRole("heading", { name: "Your Mac is staying awake." }).waitFor();
 await sleep(1200);
-await moveClick("button","Profiles",2100);
-await moveClick("button","Schedules",1900);
-await moveClick("button","History",1900);
-await moveClick("button","Settings",2100);
-await moveClick("button","Session",2100);
+await moveClick("button", "Profiles", 2100);
+await moveClick("button", "Schedules", 1900);
+await moveClick("button", "History", 1900);
+await moveClick("button", "Settings", 2100);
+await moveClick("button", "Session", 2100);
 await sleep(2300);
-await moveClick("button","Stop Session",1350);
-await page.getByRole("heading",{name:"Ready when you are."}).waitFor();
+await moveClick("button", "Stop Session", 1350);
+await page.getByRole("heading", { name: "Ready when you are." }).waitFor();
 await sleep(1700);
-fs.writeFileSync(path.join(out,"cursor-events.json"),JSON.stringify(cursorEvents,null,2));
-const video=page.video(); await context.close(); await browser.close();
-const raw=await video.path(); const dest=path.join(out,"live-ui.webm");
-fs.copyFileSync(raw,dest); if(raw!==dest)fs.unlinkSync(raw); console.log("CAPTURE",dest);
+fs.writeFileSync(path.join(out, "cursor-events.json"), JSON.stringify(cursorEvents, null, 2));
+const video = page.video();
+await context.close();
+await browser.close();
+const raw = await video.path();
+const dest = path.join(out, "live-ui.webm");
+fs.copyFileSync(raw, dest);
+if (raw !== dest) fs.unlinkSync(raw);
+console.log("CAPTURE", dest);
