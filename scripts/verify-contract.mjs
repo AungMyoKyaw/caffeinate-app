@@ -27,6 +27,10 @@ const lifecycle = required("src-tauri/src/lib.rs");
 const app = required("src/App.svelte");
 const client = required("src/lib/caffeinate.ts");
 const css = required("src/styles.css");
+const store = required("src-tauri/src/store.rs");
+const appApi = required("src/lib/app-api.ts");
+const design = required("docs/redesign/FINAL-DESIGN.md");
+const lock = required("docs/redesign/LOCK.json");
 const viteConfig = required("vite.config.ts");
 const vitestConfig = required("vitest.config.ts");
 const readme = required("README.md");
@@ -91,7 +95,22 @@ expect(
 expect(backend, /\/usr\/bin\/caffeinate/, "backend must call the fixed macOS caffeinate binary");
 expect(backend, /Command::new\(CAFFEINATE_PATH\)/, "backend must spawn directly with Command::new");
 expect(backend, /try_wait\(/, "backend must reconcile timed child exit");
-expect(backend, /\.child\s*\.\s*kill\(/s, "backend must kill the child on stop");
+expect(backend, /child\s*\.kill\(/, "backend must terminate the owned process on stop");
+expect(backend, /terminate_owned\(/, "backend must centralize process ownership cleanup");
+expect(backend, /start_session\(/, "Rust must expose a typed start operation");
+expect(backend, /pub fn update\(/, "Rust must support in-place session updates");
+expect(backend, /WakeMode/, "Rust must distinguish system, display, both");
+expect(store, /schedule_tick\(/, "native Rust scheduling is missing");
+expect(store, /sync_history\(/, "persisted bounded session history is missing");
+expect(store, /create_schedule\(/, "one-shot schedule management is missing");
+expect(appApi, /wakeCommandPreview/, "frontend typed wake-mode command preview missing");
+expect(lifecycle, /TrayIconBuilder/, "native menu bar must be implemented");
+expect(lifecycle, /CloseRequested/, "window-close must hide without quitting");
+expect(lifecycle, /GlobalShortcutExt/, "configurable global shortcuts are missing");
+expect(lifecycle, /NotificationExt/, "native completion notifications are missing");
+expect(lifecycle, /battery_low\(/, "low-battery warning logic is missing");
+expect(design, /HORIZON/, "locked Horizon icon design contract is missing");
+expect(lock, /\"implementation\"/, "approval lock must remain accessible");
 expect(lifecycle, /RunEvent::Exit/, "application exit cleanup is missing");
 expect(lifecycle, /cleanup\(/, "exit event must call cleanup");
 expect(
@@ -109,8 +128,14 @@ if (/keep_display_awake|timeout_seconds|started_at_unix_ms|remaining_seconds/.te
 expect(app, /aria-live="polite"/, "status updates need an aria-live region");
 expect(app, /role="alert"/, "errors need an alert region");
 expect(app, /metaKey.*Enter|Enter.*metaKey/s, "Command-Return keyboard action is missing");
-expect(app, /DURATION_PRESETS/, "duration presets must remain visible in the Svelte UI");
-expect(app, /focus-visible:/, "visible keyboard focus styling is missing");
+for (const choice of ["1800", "3600", "7200", "14400", "custom"]) {
+  if (!app.includes(choice)) failures.push(`visible duration control missing ${choice}`);
+}
+for (const choice of ["profiles", "schedules", "recent", "preferences"]) {
+  if (!app.includes(choice)) failures.push(`required v3 page missing ${choice}`);
+}
+expect(css, /focus-visible/, "visible keyboard focus styling is missing");
+expect(css, /--sw-canvas/, "Stillwater semantic styling tokens are missing");
 expect(css, /prefers-reduced-motion/, "reduced motion handling is missing");
 expect(css, /prefers-color-scheme:\s*dark/, "dark appearance support is missing");
 expect(vitestConfig, /statements:\s*100/, "coverage must require 100% statements");
@@ -125,13 +150,10 @@ for (const file of [backend, lifecycle, app, css, packageSource]) {
   if (/tauri-plugin-shell|tauri_plugin_shell/.test(file)) {
     failures.push("shell plugin is forbidden for this fixed-command app");
   }
-  if (/TrayIcon|SystemTray|trayIcon|menu bar app/i.test(file)) {
-    failures.push("tray or menu-bar implementation is forbidden");
-  }
 }
 
 if (/linear-gradient|radial-gradient|backdrop-filter/.test(css)) {
-  failures.push("gradients or glass effects are forbidden in the Carbon + Volt control surface");
+  failures.push("decorative gradients or glass effects violate the Stillwater design");
 }
 
 if (/@import\s+url|fonts\.googleapis|fonts\.gstatic/.test(css)) {
@@ -155,5 +177,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  "Contract passed: Svelte frontend, fixed-process safety, local-only scope, coverage policy, and lightweight dependency boundary are intact."
+  "Caffeinate 3.0 contract passed: typed Rust ownership, Stillwater/Horizon UI, native tray/scheduling, local-only behavior, test policy and dependencies."
 );

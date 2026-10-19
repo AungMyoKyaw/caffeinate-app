@@ -2,135 +2,186 @@
   "use strict";
 
   const config = window.CAFFEINATE_SITE ?? {
-    version: "2.1.0",
-    minimumMacOS: "macOS 13 or later",
-    dmgUrl: "./downloads/Caffeinate.dmg",
-    brew: {
-      available: false,
-      command: "brew install --cask caffeinate"
-    }
+    previewVersion: "3.0.0-beta.0",
+    publishedVersion: "2.1.0",
+    releasesUrl: "https://github.com/AungMyoKyaw/caffeinate-app/releases",
+    brew: { available: false, command: "" }
   };
 
+  const screens = [
+    {
+      id: "session",
+      title: "Stay in control.",
+      description:
+        "Choose System, Display or Both. Pick a duration, see the running state, and stop instantly when you're done.",
+      caption: "A live wake session with an explicit stop action.",
+      alt: "Real macOS Caffeinate 3.0 Session screen showing an active wake session and duration controls"
+    },
+    {
+      id: "profiles",
+      title: "One setup. Any time.",
+      description:
+        "Save the wake modes and durations you reach for often. Your favorite routine is one selection away.",
+      caption: "Profiles and their local, reusable configurations.",
+      alt: "Caffeinate 3.0 Profiles screen with a field to name and save a wake setup"
+    },
+    {
+      id: "schedules",
+      title: "Plan ahead, simply.",
+      description:
+        "Create local one-time start or stop actions, change them when plans shift, and always see their status.",
+      caption: "One-time schedules, available while Caffeinate runs.",
+      alt: "Caffeinate 3.0 Schedules screen with date, name and action controls"
+    },
+    {
+      id: "history",
+      title: "A quiet record.",
+      description:
+        "See recent completed sessions without an account. Everything stays on your Mac, under your control.",
+      caption: "Local history, without cloud tracking.",
+      alt: "Caffeinate 3.0 History screen listing a completed session and clear-history control"
+    },
+    {
+      id: "settings",
+      title: "Make it yours.",
+      description:
+        "Appearance, notifications, login launch, low-battery warnings and optional global shortcuts, all in one place.",
+      caption: "Simple preferences that stay out of your way.",
+      alt: "Caffeinate 3.0 Settings screen showing light appearance, notifications and optional shortcuts"
+    }
+  ];
+  const tabs = [...document.querySelectorAll("[data-gallery-tab]")];
+  const image = document.getElementById("gallery-image");
+  const panel = document.getElementById("gallery-panel");
+  const dialog = document.getElementById("image-dialog");
+  const dialogImage = document.getElementById("dialog-image");
+  const dialogLabel = document.getElementById("dialog-label");
   const toast = document.querySelector("[data-toast]");
-  let toastTimer;
+  let toastTimeout = 0;
+  let active = 0;
 
-  function showToast(message) {
+  function notify(message) {
     if (!(toast instanceof HTMLElement)) return;
     toast.textContent = message;
     toast.classList.add("is-visible");
-    window.clearTimeout(toastTimer);
-    toastTimer = window.setTimeout(() => {
-      toast.classList.remove("is-visible");
-    }, 2200);
+    clearTimeout(toastTimeout);
+    toastTimeout = window.setTimeout(() => toast.classList.remove("is-visible"), 2400);
   }
 
-  document.querySelectorAll("[data-version]").forEach((element) => {
-    element.textContent = `Version ${config.version}`;
+  document.querySelectorAll("[data-preview-version]").forEach((el) => {
+    el.textContent = config.previewVersion;
+  });
+  document.querySelectorAll("[data-published-version]").forEach((el) => {
+    el.textContent = config.publishedVersion;
+  });
+  document.querySelectorAll("[data-stable-link]").forEach((link) => {
+    if (link instanceof HTMLAnchorElement) link.href = config.releasesUrl;
+  });
+  document.querySelectorAll("[data-year]").forEach((el) => {
+    el.textContent = String(new Date().getFullYear());
+  });
+  document.querySelectorAll("[data-brew-command]").forEach((el) => {
+    el.textContent = config.brew.command;
+  });
+  document.querySelectorAll("[data-copy-brew]").forEach((button) => {
+    button.hidden = !config.brew.available;
   });
 
-  document.querySelectorAll("[data-macos]").forEach((element) => {
-    element.textContent = config.minimumMacOS;
-  });
-
-  document.querySelectorAll("[data-dmg-link]").forEach((link) => {
-    if (link instanceof HTMLAnchorElement) link.href = config.dmgUrl;
-  });
-
-  const header = document.querySelector("[data-header]");
-  const updateHeader = () => {
-    header?.classList.toggle("is-scrolled", window.scrollY > 8);
-  };
-  updateHeader();
-  window.addEventListener("scroll", updateHeader, { passive: true });
-
-  const navToggle = document.querySelector("[data-nav-toggle]");
-  const navigation = document.querySelector("[data-navigation]");
-
-  function closeNavigation() {
-    navigation?.classList.remove("is-open");
-    navToggle?.setAttribute("aria-expanded", "false");
+  function activateGallery(index, focusTab = false) {
+    active = (index + screens.length) % screens.length;
+    const screen = screens[active];
+    tabs.forEach((tab, i) => {
+      tab.setAttribute("aria-selected", String(i === active));
+      tab.setAttribute("tabindex", i === active ? "0" : "-1");
+      if (i === active && focusTab) tab.focus();
+    });
+    if (panel) panel.setAttribute("aria-labelledby", tabs[active].id);
+    if (image) {
+      image.setAttribute("src", "assets/screenshots/" + screen.id + ".webp");
+      image.setAttribute("alt", screen.alt);
+    }
+    const count = document.getElementById("gallery-count");
+    const title = document.getElementById("gallery-screen-title");
+    const description = document.getElementById("gallery-description");
+    const caption = document.getElementById("gallery-caption");
+    if (count) count.textContent = String(active + 1).padStart(2, "0") + " / 05";
+    if (title) title.textContent = screen.title;
+    if (description) description.textContent = screen.description;
+    if (caption) caption.textContent = screen.caption;
   }
 
-  navToggle?.addEventListener("click", () => {
-    const isOpen = navigation?.classList.toggle("is-open") ?? false;
-    navToggle.setAttribute("aria-expanded", String(isOpen));
-  });
-
-  navigation?.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", closeNavigation);
-  });
-
-  window.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") closeNavigation();
-  });
-
-  const tabs = Array.from(document.querySelectorAll("[data-demo-tab]"));
-  const panels = Array.from(document.querySelectorAll("[data-demo-panel]"));
-
-  function activateDemo(name, focus = false) {
-    tabs.forEach((tab) => {
-      const active = tab.getAttribute("data-demo-tab") === name;
-      tab.classList.toggle("is-active", active);
-      tab.setAttribute("aria-selected", String(active));
-      tab.setAttribute("tabindex", active ? "0" : "-1");
-      if (active && focus && tab instanceof HTMLElement) tab.focus();
-    });
-
-    panels.forEach((panel) => {
-      panel.hidden = panel.getAttribute("data-demo-panel") !== name;
-    });
-  }
-
-  tabs.forEach((tab, index) => {
-    tab.addEventListener("click", () => {
-      activateDemo(tab.getAttribute("data-demo-tab") ?? "ready");
-    });
-
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => activateGallery(i));
     tab.addEventListener("keydown", (event) => {
       if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
       event.preventDefault();
-      let nextIndex = index;
-      if (event.key === "ArrowRight") nextIndex = (index + 1) % tabs.length;
-      if (event.key === "ArrowLeft") nextIndex = (index - 1 + tabs.length) % tabs.length;
-      if (event.key === "Home") nextIndex = 0;
-      if (event.key === "End") nextIndex = tabs.length - 1;
-      activateDemo(tabs[nextIndex].getAttribute("data-demo-tab") ?? "ready", true);
+      let next = i;
+      if (event.key === "ArrowRight") next = i + 1;
+      if (event.key === "ArrowLeft") next = i - 1;
+      if (event.key === "Home") next = 0;
+      if (event.key === "End") next = screens.length - 1;
+      activateGallery(next, true);
     });
   });
+  document
+    .querySelector("[data-gallery-next]")
+    ?.addEventListener("click", () => activateGallery(active + 1));
+  document
+    .querySelector("[data-gallery-prev]")
+    ?.addEventListener("click", () => activateGallery(active - 1));
+  activateGallery(0);
 
-  const brewStatus = document.querySelector("[data-brew-status]");
-  const brewDescription = document.querySelector("[data-brew-description]");
-  const brewCommand = document.querySelector("[data-brew-command]");
-  const copyBrew = document.querySelector("[data-copy-brew]");
-  const copyLabel = document.querySelector("[data-copy-label]");
-
-  if (brewCommand) brewCommand.textContent = config.brew.command;
-
-  if (config.brew.available) {
-    brewStatus?.classList.add("is-available");
-    if (brewStatus) brewStatus.textContent = "Available";
-    if (brewDescription) {
-      brewDescription.textContent =
-        "Install or update Caffeinate through Homebrew with one command.";
-    }
-    if (copyBrew instanceof HTMLButtonElement) copyBrew.disabled = false;
-    if (copyLabel) copyLabel.textContent = "Copy command";
-  }
-
-  copyBrew?.addEventListener("click", async () => {
-    if (!config.brew.available) return;
-    try {
-      await navigator.clipboard.writeText(config.brew.command);
-      if (copyLabel) copyLabel.textContent = "Copied";
-      showToast("Homebrew command copied.");
-      window.setTimeout(() => {
-        if (copyLabel) copyLabel.textContent = "Copy command";
-      }, 1800);
-    } catch {
-      showToast("Copy failed. Select the command manually.");
-    }
+  document.querySelector("[data-open-preview]")?.addEventListener("click", () => {
+    if (!(dialog instanceof HTMLDialogElement) || !(dialogImage instanceof HTMLImageElement))
+      return;
+    const screen = screens[active];
+    dialogImage.src = "assets/screenshots/" + screen.id + ".webp";
+    dialogImage.alt = screen.alt;
+    if (dialogLabel)
+      dialogLabel.textContent =
+        "Caffeinate 3.0 — " + screen.id[0].toUpperCase() + screen.id.slice(1);
+    dialog.showModal();
+  });
+  document.querySelector("[data-close-preview]")?.addEventListener("click", () => {
+    if (dialog instanceof HTMLDialogElement) dialog.close();
+  });
+  dialog?.addEventListener("click", (event) => {
+    if (event.target === dialog && dialog instanceof HTMLDialogElement) dialog.close();
   });
 
-  const year = document.querySelector("[data-year]");
-  if (year) year.textContent = String(new Date().getFullYear());
+  async function copy(text, label) {
+    try {
+      await navigator.clipboard.writeText(text);
+      notify(label + " copied to clipboard.");
+    } catch {
+      notify("Clipboard unavailable. Select and copy the visible command.");
+    }
+  }
+  document.querySelector("[data-copy-command]")?.addEventListener("click", () => {
+    void copy("/usr/bin/caffeinate -i -w <app-pid>", "Example command");
+  });
+  document.querySelector("[data-copy-brew]")?.addEventListener("click", () => {
+    void copy(config.brew.command, "Homebrew command");
+  });
+
+  const toggle = document.querySelector("[data-nav-toggle]");
+  const navigation = document.getElementById("site-nav");
+  function closeMenu() {
+    navigation?.classList.remove("is-open");
+    toggle?.setAttribute("aria-expanded", "false");
+    toggle?.setAttribute("aria-label", "Open navigation");
+  }
+  toggle?.addEventListener("click", () => {
+    const open = navigation?.classList.toggle("is-open") ?? false;
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
+  });
+  navigation?.querySelectorAll("a").forEach((link) => link.addEventListener("click", closeMenu));
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeMenu();
+  });
+  document.addEventListener("click", (event) => {
+    if (event.target instanceof Element && !event.target.closest(".site-nav, .nav-toggle"))
+      closeMenu();
+  });
 })();

@@ -12,7 +12,16 @@ const browserGlobals = {
 
 export default [
   {
-    ignores: ["dist/**", "coverage/**", "src-tauri/target/**", "public/**"]
+    ignores: [
+      "dist/**",
+      "coverage/**",
+      "src-tauri/target/**",
+      "public/**",
+      ".agents/**",
+      ".pi/**",
+      ".codex/**",
+      ".impeccable/**"
+    ]
   },
   ...tseslint.configs.strict,
   ...tseslint.configs.stylistic,

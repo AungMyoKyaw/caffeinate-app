@@ -12,6 +12,11 @@ export interface CaffeinateStatus {
   timeoutSeconds: number | null;
   remainingSeconds: number | null;
   command: string;
+  wakeMode?: "system" | "display" | "both";
+  elapsedSeconds?: number | null;
+  endsAtUnixMs?: number | null;
+  sessionId?: number | null;
+  revision?: number;
 }
 
 export type InvokeLike = <T>(command: string, args?: Record<string, unknown>) => Promise<T>;

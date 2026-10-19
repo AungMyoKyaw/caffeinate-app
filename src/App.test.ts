@@ -77,7 +77,8 @@ describe("App", () => {
 
     expect(target.querySelector('[data-testid="selected-duration-pill"]')).toBeNull();
     expect(target.querySelector('[aria-label="Wake session duration"]')).not.toBeNull();
-    expect(target.querySelectorAll('input[name="duration"]')).toHaveLength(5);
+    expect(target.querySelectorAll('input[name="duration"]')).toHaveLength(6);
+    expect(target.querySelector('input[aria-label="Custom duration"]')).not.toBeNull();
   });
 
   it("groups state copy and the primary action in one compact region", async () => {
@@ -95,7 +96,7 @@ describe("App", () => {
     await render(client);
 
     document.querySelector<HTMLInputElement>('[aria-label="1 hour"]')?.click();
-    document.querySelector<HTMLInputElement>("#keep-display-awake")?.click();
+    document.querySelectorAll<HTMLInputElement>('input[name="wakeMode"]')[2]?.click();
     powerButton().click();
     await Promise.resolve();
     await tick();

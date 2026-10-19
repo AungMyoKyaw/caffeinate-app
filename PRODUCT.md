@@ -1,5 +1,7 @@
 # Caffeinate — Product Context
 
+> **Current shipped behavior:** The details below describe the existing v2.1 implementation, including its desktop-only restrictions. **Approved next release (not implemented):** Caffeinate 3.0 specification **CFT-3.0-RC1**, all 40 decisions and 60 gates, Stillwater/Horizon. For future v3 development, [docs/redesign/PRD.md](docs/redesign/PRD.md) is the authoritative product contract and [docs/redesign/FINAL-DESIGN.md](docs/redesign/FINAL-DESIGN.md) is the locked visual contract. **Do not implement until separately authorized.**
+
 ## Product
 
 Caffeinate is a macOS-only desktop utility that prevents idle system sleep by managing the built-in `/usr/bin/caffeinate` command. It is a normal desktop window, never a menu bar application.

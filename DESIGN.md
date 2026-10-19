@@ -1,5 +1,7 @@
 # Caffeinate Svelte + Carbon Volt Design
 
+> **Historical shipped design (v2.1):** Carbon + Volt describes the current implementation below. **Approved Caffeinate 3.0 design (NOT implemented):** **Stillwater** with **Horizon** icon, locked 2026-10-19. See [docs/redesign/FINAL-DESIGN.md](docs/redesign/FINAL-DESIGN.md) for authoritative v3 visual tokens, layout, icon geometry and interaction rules, and [docs/redesign/APPROVAL.md](docs/redesign/APPROVAL.md) for authorization boundaries. **No production application edits until the user separately authorizes implementation.**
+
 ## Product intent
 
 Caffeinate is a macOS-only, local-only control surface for `/usr/bin/caffeinate`. Its job is to let a person start one wake session, understand exactly what is being prevented, optionally keep the display awake, choose a bounded duration, and stop the session cleanly. It is not a dashboard, scheduler, account product, or menu-bar utility.

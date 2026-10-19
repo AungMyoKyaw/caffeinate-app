@@ -1,5 +1,17 @@
 # Changelog
 
+## 3.0.0-beta.0 — 2026-10-19 (unreleased)
+
+- Replaced Carbon + Volt with the approved Stillwater visual identity and Horizon app/menu-bar icons.
+- Added native Tauri menu bar, window-close-to-hide lifecycle and cleanup on explicit Quit.
+- Added System, Display and Both wake modes; custom duration and safe live-session edits with Rust revision checks.
+- Introduced local persisted preferences, user profiles, bounded recent-session history and one-shot schedules.
+- Added optional login launch, configurable global shortcuts, completion notifications and low-battery warnings.
+- Added Light/Dark/System themes and accessible first-screen session controls.
+- Expanded Rust process/persistence/schedule and frontend UI/IPC tests and v3 contract checks.
+- Prepared Apple Silicon app/DMG packaging; no publication, notarization, signing credentials or final QA approval implied.
+- Outstanding release gates and evidence are documented in [Implementation Status](docs/redesign/IMPLEMENTATION_STATUS.md).
+
 ## 2.1.0 — 2026-08-16
 
 - Removed the text label under the power control (`Keep Mac Awake` / `Allow Sleep`), which read as a status and clashed with the adjacent awake-state copy. The control keeps the action name as its accessible label, and state stays conveyed by the status text and Volt styling.

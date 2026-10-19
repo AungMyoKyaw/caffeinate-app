@@ -1,8 +1,9 @@
 window.CAFFEINATE_SITE = Object.freeze({
-  version: "2.1.0",
+  previewVersion: "3.0.0-beta.0",
+  previewIsPublished: false,
+  publishedVersion: "2.1.0",
   minimumMacOS: "macOS 12 or later",
-  dmgUrl:
-    "https://github.com/AungMyoKyaw/caffeinate-app/releases/latest/download/Caffeinate_2.1.0_universal.dmg",
+  releasesUrl: "https://github.com/AungMyoKyaw/caffeinate-app/releases",
   brew: Object.freeze({
     available: true,
     command: "brew install --cask AungMyoKyaw/homebrew-tap/caffeinate"

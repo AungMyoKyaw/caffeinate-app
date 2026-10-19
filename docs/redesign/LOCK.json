@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "recordId": "CFT-3.0-APPROVAL-2026-10-19",
+  "approvedDate": "2026-10-19",
+  "status": "implementation_approved_ui_rework_built_release_pending",
+  "specification": "CFT-3.0-RC1",
+  "requirements": {
+    "approvedQuestions": {
+      "start": 1,
+      "end": 40,
+      "count": 40
+    },
+    "approvedGates": {
+      "start": 1,
+      "end": 60,
+      "count": 60
+    },
+    "operationalPoliciesApproved": true
+  },
+  "visual": {
+    "identity": "Stillwater",
+    "icon": "Horizon",
+    "mode": "operate",
+    "appPlatform": "macos",
+    "nativeTitleBar": true,
+    "nativeMenuBar": true,
+    "primaryAction": "rectangular-labeled-button",
+    "durationControl": "segmented-presets-plus-custom",
+    "appearance": [
+      "light",
+      "dark",
+      "system"
+    ],
+    "canonicalDocument": "UI-REWORK-IMPLEMENTATION.md",
+    "prototype": "PROTOTYPE-REWORK.html",
+    "selectedPreview": "preview-stillwater.png",
+    "legacyIdentity": "Carbon + Volt"
+  },
+  "implementation": {
+    "authorized": true,
+    "applicationCodeChangesAuthorized": true,
+    "nativeRuntimeChangesAuthorized": true,
+    "assetReplacementAuthorized": true,
+    "commitAuthorized": false,
+    "pushAuthorized": false,
+    "publishAuthorized": false,
+    "deployAuthorized": false,
+    "separateAuthorizationRequired": false,
+    "sourceOfTruth": [
+      "PRD.md",
+      "PROTOTYPE-REWORK.html",
+      "FINAL-DESIGN.md",
+      "UI-REWORK-IMPLEMENTATION.md"
+    ],
+    "uiReworkImplemented": true,
+    "releaseAuthorizationRequired": true
+  },
+  "policies": {
+    "minCustomDurationSeconds": 60,
+    "maxCustomDurationSeconds": 86400,
+    "activeEditDeadline": "from_confirmation_time",
+    "batteryLowThresholdPercent": 15,
+    "recentHistoryLimit": 30,
+    "launchAtLoginDefault": false,
+    "autoResumeWakeSessionOnLogin": false,
+    "scheduledActionsRequireRunningApp": true,
+    "missedScheduleCatchup": false,
+    "scheduleConflicts": "skip",
+    "quitCleansUpAssertions": true,
+    "defaultGlobalShortcuts": "none",
+    "wakeModes": [
+      "system",
+      "display",
+      "both"
+    ]
+  }
+}

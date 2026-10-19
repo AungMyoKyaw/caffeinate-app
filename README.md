@@ -1,238 +1,177 @@
-# Caffeinate for macOS
+<div align="center">
 
-A lightweight Tauri + Svelte utility that owns macOS's built-in `/usr/bin/caffeinate` process so one wake session is easy to start, understand, and stop.
+<img src="src-tauri/icons/horizon.svg" width="88" alt="Caffeinate Horizon icon" />
 
-|                            Ready                             |                             Awake                              |
-| :----------------------------------------------------------: | :------------------------------------------------------------: |
-| ![Caffeinate ready state](docs/screenshots/svelte-ready.png) | ![Caffeinate active state](docs/screenshots/svelte-active.png) |
+# Caffeinate
 
-## Features
+**Awake when it matters.**
 
-- Prevents idle system sleep with `caffeinate -i`.
-- Optionally prevents display sleep with `-d`.
-- Supports until-stopped, 30-minute, 1-hour, 2-hour, and 4-hour sessions.
-- Uses `-w <app-pid>` so the assertion ends if Caffeinate exits unexpectedly.
-- Reconciles natural timeout and cleans up on application exit.
-- Shows the exact command Rust owns.
-- Supports Command-Return, visible keyboard focus, reduced motion, increased contrast, and light/dark appearance.
-- Runs locally with no account, telemetry, analytics, remote font, or network request.
+A quiet, local-first macOS app for keeping your Mac awake while your work finishes.
 
-Caffeinate is a normal macOS window. It is intentionally not a menu-bar utility and does not keep running after the app exits.
+[Website preview](website/) · [Published releases](https://github.com/AungMyoKyaw/caffeinate-app/releases) · [Report an issue](https://github.com/AungMyoKyaw/caffeinate-app/issues)
 
-## Architecture
+**Caffeinate 3.0.0-beta.0 · In development · macOS 12+**
 
-The Svelte frontend owns presentation and user intent. A small typed client invokes three Tauri commands. Rust remains authoritative for `/usr/bin/caffeinate` process ownership and lifecycle.
+</div>
 
-```mermaid
-flowchart LR
-  U[Mac user] --> S[Svelte control surface]
-  S -->|typed Tauri invoke| R[Rust controller]
-  R -->|direct spawn| C["/usr/bin/caffeinate"]
-  R -->|status| S
-```
+![Caffeinate 3.0 running an active macOS wake session](docs/screenshots/v3/session.png)
 
-Detailed diagrams:
+## One purpose, done well
 
-- [System context](docs/architecture/system-context.md)
-- [Module and data flow](docs/architecture/module-flow.md)
-- [Release flow](docs/architecture/release-flow.md)
+Builds take time. So do downloads, renders, presentations, and remote sessions. Caffeinate keeps your Mac awake without making you reconfigure your permanent system power settings.
 
-## Technology stack
+Select what should stay awake, choose how long, and press **Keep Mac Awake**. Caffeinate manages the built-in `/usr/bin/caffeinate` command and shows when its assertion is active. Stop when you're finished, or let a timed session expire.
 
-- Svelte 5 + TypeScript
-- Tailwind CSS v4 (build-time utility framework via `@tailwindcss/vite`)
-- Vite 8
-- Tauri 2
-- Rust
-- Bun package management
-- Vitest + V8 coverage
-- ESLint + `eslint-plugin-svelte`
-- Prettier + `prettier-plugin-svelte`
+No account. No cloud synchronization. No telemetry.
 
-No UI kit, router, web-font package, icon package, state library, analytics SDK, or shell plugin is used. Tailwind CSS compiles down to a single small stylesheet at build time and does not add JavaScript to the runtime bundle.
+## The interface
 
-## Requirements
+Every screenshot below comes from the actual macOS beta, captured on **19 October 2026**—not an HTML mockup.
 
-- macOS 12 or newer
-- Xcode Command Line Tools
-- Rust stable toolchain
-- Bun canary (1.4.0-canary.1)
+|                                                             Session                                                             |                                                        Profiles                                                         |
+| :-----------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------: |
+| <img src="docs/screenshots/v3/session.png" alt="Session screen with running wake timer and Stop Session control" width="470" /> | <img src="docs/screenshots/v3/profiles.png" alt="Profiles screen to save a recurring wake configuration" width="470" /> |
+|                                      Control System / Display / Both and session duration.                                      |                                      Reuse your preferred mode and timer settings.                                      |
 
-Install Apple's command-line tools:
+|                                              Schedules                                              |                                           History                                            |
+| :-------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: |
+| <img src="docs/screenshots/v3/schedules.png" alt="One-time schedule editor on macOS" width="470" /> | <img src="docs/screenshots/v3/history.png" alt="Recent local session history" width="470" /> |
+|                               Set up one-time start or stop actions.                                |                         Review and clear previous sessions locally.                          |
 
-```bash
-xcode-select --install
-```
+<details>
+<summary><strong>View Settings</strong></summary>
 
-Then verify local tooling:
+![Caffeinate 3.0 settings including theme, notifications and shortcuts](docs/screenshots/v3/settings.png)
 
-```bash
-bun --version
-rustc --version
-cargo --version
-```
+</details>
 
-## Installation
+Unedited original captures, the cropped PNGs, and website-optimized images are indexed in [the screenshot archive](docs/screenshots/v3/README.md).
 
-For local development:
+## Features in 3.0 beta
 
-```bash
-bun install --frozen-lockfile
-```
+- **System, Display, or Both:** prevent idle system sleep, display sleep, or both with typed options mapped to Apple's `-i` and `-d` flags.
+- **A timer that fits your work:** until stopped, 30 minutes, 1 hour, 2 hours, 4 hours, or any custom duration from 1–1440 minutes.
+- **Control a running session:** stage new duration or mode settings, then explicitly Apply or Discard.
+- **Native menu bar:** close the window to hide it; use the menu to see status and control your session. Choosing Quit releases the owned assertion.
+- **Profiles:** save, edit, apply, and remove your favorite configurations.
+- **One-time schedules:** start or stop a session at a chosen local time while Caffeinate is running; edit, disable, or cancel upcoming actions.
+- **Local history:** review recent completed sessions, then clear them when you want.
+- **Preferences:** Light / Dark / System appearance, optional launch at login, notifications, low-battery warning, and configurable global shortcuts.
+- **Keyboard friendly:** `⌘ Return` to toggle, accessible controls, visible focus, and reduced-motion support.
+- **See the actual command:** an expandable technical details section exposes the owned `/usr/bin/caffeinate` invocation.
 
-For an end-user build, use Homebrew or a release DMG once a verified release has been published.
+### Important boundaries
+
+Caffeinate blocks _idle_ sleep; it **cannot override normal MacBook lid-close sleep**. One-time schedules execute only while the application runs—they cannot wake a sleeping Mac or run after Quit. Closing the _window_ leaves Caffeinate in the menu bar; **quitting the app** ends its owned assertion. There is no recurring background daemon or network service.
+
+## Getting Caffeinate
+
+### Published version
+
+The 3.0 redesign is currently a **local beta**, not a publicly published 3.0 release. To install the existing published version instead, use [GitHub Releases](https://github.com/AungMyoKyaw/caffeinate-app/releases) or the published Homebrew cask:
 
 ```bash
 brew install --cask AungMyoKyaw/homebrew-tap/caffeinate
 ```
 
-## Development
+The currently published version and the 3.0 beta may have **different UI and features**. The screenshots above show 3.0.
+
+### Run the 3.0 beta from source
+
+On a Mac with Xcode Command Line Tools, Rust stable, and Bun installed:
 
 ```bash
+git clone https://github.com/AungMyoKyaw/caffeinate-app.git
+cd caffeinate-app
 bun install --frozen-lockfile
 bun tauri dev
 ```
 
-The Vite dev server binds to `127.0.0.1:1420`; Tauri loads it into the native application window.
+The public repository may not yet contain the local beta changes shown here. If working from the existing local project directory, run the final two commands there instead.
 
-## Configuration
-
-There are no runtime environment variables, API keys, accounts, or remote services. Tauri configuration lives in `src-tauri/tauri.conf.json`.
-
-## Common commands
-
-| Task                       | Command                |
-| -------------------------- | ---------------------- |
-| Develop                    | `bun tauri dev`        |
-| Format                     | `bun run format`       |
-| Format check               | `bun run format:check` |
-| Lint                       | `bun run lint`         |
-| Type/Svelte check          | `bun run typecheck`    |
-| Test                       | `bun run test`         |
-| Coverage                   | `bun run coverage`     |
-| Build frontend             | `bun run build`        |
-| Package macOS              | `bun run tauri:build`  |
-| Clean                      | `bun run clean`        |
-| Full frontend verification | `bun run verify`       |
-
-## Testing
-
-Run the frontend suite:
+To build an Apple Silicon `.app` and DMG locally:
 
 ```bash
-bun run test
+bun tauri build --bundles app,dmg --target aarch64-apple-darwin
 ```
 
-Run the Rust suite:
+For a universal Intel + Apple Silicon build, configure both Rust targets and run `bun run tauri:build`. Local beta bundles currently use ad-hoc signing; notarized public distribution requires a separately authorized release and Apple signing setup.
 
-```bash
-cargo test --manifest-path src-tauri/Cargo.toml
+## Under the hood
+
+Caffeinate uses **Tauri 2 + Rust** for the native window, menu bar, macOS process lifecycle, local storage, notifications, and scheduling. **Svelte 5 + TypeScript + Tailwind CSS 4** render the Stillwater interface. **Vite 8 and Bun** power development and production builds.
+
+```mermaid
+flowchart LR
+    User["Mac user"] --> Window["Svelte interface"]
+    User --> Menu["Native menu bar"]
+    Window -->|typed commands| Rust["Rust controller"]
+    Menu --> Rust
+    Scheduler["One-time schedules"] --> Rust
+    Store["Local preferences, profiles, history"] <--> Rust
+    Rust -->|direct process ownership| Apple["/usr/bin/caffeinate"]
+    Rust -->|events and status| Window
 ```
 
-The frontend test guard rejects skipped, disabled, todo, and focused-only tests:
+Rust invokes the **fixed absolute executable**, not a shell script, validates the wake mode and timeout, tracks the child it started, reconciles completion, and cleans up on Quit. The app-PID wait guard ensures an assertion doesn't survive an unexpected application exit.
 
-```bash
-bun run test:focus
-```
+There are no remote APIs, accounts, analytics SDKs, or external runtime services for normal app operation.
 
-## Coverage
+## Developer reference
 
-```bash
-bun run coverage
-```
+| Task                        | Command                                                 |
+| --------------------------- | ------------------------------------------------------- |
+| Install dependencies        | `bun install --frozen-lockfile`                         |
+| Native development          | `bun tauri dev`                                         |
+| Format / check formatting   | `bun run format` / `bun run format:check`               |
+| Lint and typecheck          | `bun run lint` / `bun run typecheck`                    |
+| Frontend unit tests         | `bun run test`                                          |
+| Rust unit tests             | `cargo test --manifest-path src-tauri/Cargo.toml --lib` |
+| Frontend coverage           | `bun run coverage`                                      |
+| Production frontend build   | `bun run build`                                         |
+| Architecture contract       | `bun run verify:contract`                               |
+| Validate website            | `python3 website/scripts/validate_site.py`              |
+| Validate website references | `python3 website/scripts/check_links.py`                |
 
-Vitest is configured to require 100% statements, branches, functions, and lines for project-owned frontend executable code. Reports are emitted to `coverage/` in text, LCOV, JSON summary, and HTML formats.
+The frontend's **100% statements, branches, functions and lines** coverage threshold is intentionally strict and **not yet met** for this beta. The test suite passing does not mean every release gate is complete. See [UI audit and fixes](docs/redesign/UI-CONTROLS-AUDIT-FIXES.md) and the [approved 3.0 PRD](docs/redesign/PRD.md).
 
-## Build
-
-```bash
-bun run build
-```
-
-This runs `svelte-check` before the Vite production build.
-
-## Packaging
-
-Build a universal Intel + Apple Silicon `.app` and DMG:
-
-```bash
-bun run tauri:build
-```
-
-Expected paths:
+### Repository map
 
 ```text
-src-tauri/target/universal-apple-darwin/release/bundle/macos/Caffeinate.app
-src-tauri/target/universal-apple-darwin/release/bundle/dmg/Caffeinate_2.1.0_*.dmg
+src/                       Svelte app, styles, and frontend tests
+src-tauri/src/             Rust wake controller, app lifecycle, local data
+src-tauri/icons/           Horizon icon assets
+docs/screenshots/v3/       Named real screenshots and archived originals
+docs/redesign/             Product spec, design prototypes, QA evidence
+website/                   Standalone static product website
+scripts/                   Project validation and screenshot tools
 ```
 
-The repository currently uses ad-hoc signing (`signingIdentity: "-"`). Public notarized distribution requires an Apple Developer signing/notarization setup.
+Preview the redesigned website locally:
 
-## Usage
-
-1. Choose a duration.
-2. Optionally enable **Keep display on**.
-3. Press the large wake control or Command-Return.
-4. Confirm the UI says **Mac stays awake.** and inspect the command footer if needed.
-5. Press the control again to allow normal sleep.
-
-## Process model
-
-The frontend never executes shell text. Rust directly starts only this fixed executable:
-
-```text
-/usr/bin/caffeinate -i [-d] [-t seconds] -w <app-pid>
+```bash
+cd website
+python3 -m http.server 8080
 ```
 
-Rust owns the child handle, reconciles `try_wait`, kills and waits on Stop, and calls cleanup during Tauri's `RunEvent::Exit`.
+Then open `http://127.0.0.1:8080`. Website assets are checked into the repository and do not require a JavaScript build system.
 
-## Troubleshooting
+To regenerate cropped / WebP screenshot variants after replacing the archived originals, install Pillow in your authoring environment and run:
 
-**The app says it cannot start Caffeinate** — verify you are running on macOS. The backend intentionally rejects other platforms.
+```bash
+python3 scripts/organize-v3-screenshots.py
+```
 
-**The display still turns off** — enable **Keep display on** before starting the session. The safe default blocks idle system sleep only.
+This only regenerates derived screenshot assets; original captures are preserved.
 
-**A timed session ended by itself** — that is expected. Rust observes the child exit and the frontend reconciles back to Ready on the next status poll.
+## Support, contributing and license
 
-**Dependency install changes `bun.lock`** — do not commit an unexplained lockfile change. Verify the package manifest, regenerate with the pinned Bun release, and inspect the diff.
+Found a bug? [Open an issue](https://github.com/AungMyoKyaw/caffeinate-app/issues). Contributions are welcome; please read [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md).
 
-## Security notes
+The project is available under the [MIT License](LICENSE).
 
-- No shell plugin or arbitrary command execution.
-- No network API use, telemetry, analytics, or remote configuration.
-- Fixed `/usr/bin/caffeinate` executable path.
-- Timeout input is validated in Rust.
-- The Rust process controller is the trust boundary for OS process lifetime.
-- GitHub workflows use least-privilege read permissions for CI; release write permission is limited to the tag release job.
+---
 
-See [SECURITY.md](SECURITY.md) for vulnerability reporting.
-
-## Lightweight evidence
-
-See [docs/performance.md](docs/performance.md) for the baseline and measured rewrite footprint. The production dependency boundary is enforced by `scripts/verify-contract.mjs`.
-
-## Design and project documents
-
-- [PRODUCT.md](PRODUCT.md) — product truth and explicit non-goals
-- [DESIGN.md](DESIGN.md) — Carbon + Volt design specification
-- [RALPH_LOOP.md](RALPH_LOOP.md) — project-specific fast and release loops
-- [RALPH_RUN_LOG.md](RALPH_RUN_LOG.md) — executed verification evidence and blockers
-- `docs/superpowers/specs/` — design specifications
-- `docs/superpowers/plans/` — implementation plans
-
-## Contributing
-
-Read [CONTRIBUTING.md](CONTRIBUTING.md). Keep changes inside the product scope: one local macOS wake-session control surface and one fixed OS command.
-
-## Release process
-
-1. Run the full release Ralph loop in `RALPH_LOOP.md` on macOS.
-2. Confirm the 100% frontend coverage gate and Rust checks.
-3. Build the universal `.app`/DMG.
-4. Inspect signature and architecture.
-5. Tag `v*`; the release workflow creates a draft GitHub release.
-6. Review artifacts before publishing.
-
-## License
-
-MIT © [Aung Myo Kyaw](https://github.com/AungMyoKyaw)
+<div align="center">
+<sub>Made for the long things worth finishing. · © Aung Myo Kyaw</sub>
+</div>

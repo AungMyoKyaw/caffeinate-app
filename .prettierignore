@@ -2,6 +2,12 @@ node_modules/
 dist/
 coverage/
 src-tauri/target/
+src-tauri/gen/
 *.bundle
 bun.lock
 public/
+.agents/
+.pi/
+.codex/
+.impeccable/
+docs/redesign/

@@ -1,29 +1,31 @@
-# Caffeinate Website — Product Context
+# Caffeinate Website — Product Contract
 
-## Goal
+## Purpose
 
-Present Caffeinate as a small, trustworthy macOS utility and move visitors to one of two installation paths: a DMG download now or Homebrew Cask when publishing is complete.
+Introduce Caffeinate as a clear and trustworthy local-first macOS wake-session utility, show **real** screenshots of its 3.0 beta, and route interested users to the actual published release without pretending the beta is already publicly distributed.
 
 ## Audience
 
-Mac users running long builds, uploads, renders, downloads, coding agents, presentations, or remote sessions who need the computer to stay awake without changing permanent power settings.
+Mac users running long builds, downloads, remote sessions, design exports, presentations, coding agents and other tasks that cannot afford idle system sleep.
 
 ## Product truth
 
-- macOS only.
-- Normal desktop window, not a menu-bar app.
-- Uses the built-in `/usr/bin/caffeinate` command.
-- No account, telemetry, or network access in the application.
-- The application releases the assertion when stopped or closed.
+- Caffeinate is a **native macOS Tauri/Rust + Svelte utility** with a normal window **and** native menu bar.
+- It directly owns only the fixed built-in `/usr/bin/caffeinate` process.
+- System, Display and Both modes, duration presets/custom minutes, active changes, local profiles, one-time schedules, local history and preferences are in the **3.0 beta**.
+- Closing the window keeps Caffeinate in the menu bar. Explicit Quit releases the wake assertion.
+- Scheduling needs the app process to be running; it does not wake a sleeping Mac.
+- Neither the app nor website needs an account, tracking, cloud sync or telemetry.
+- Closing the MacBook lid is outside the app's control.
+- **3.0.0-beta.0 is not a published public release.** The site's installed version and future version are explicitly separate.
 
-## Website job
+## Conversion
 
-1. Explain the utility in one sentence.
-2. Show the actual product screenshots.
-3. Make the DMG installation path obvious.
-4. Show Homebrew honestly as unavailable until the cask is published.
-5. Avoid marketing claims that cannot be verified.
+1. Make the utility understandable in under one glance.
+2. Earn trust with actual screenshots and literal limitations.
+3. Help visitors explore screenshots and find the existing published version.
+4. Keep source and issue-reporting paths discoverable.
 
 ## Voice
 
-Direct, calm, compact, technical when useful. No productivity hype, fake testimonials, user counts, or invented compatibility claims.
+Plain, practical, composed, confident without hype, truthful about beta status. Avoid fabricated testimonials, user counts, security certifications, download availability, or unsupported system claims.
