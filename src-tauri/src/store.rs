@@ -86,7 +86,10 @@ fn current_ms() -> u64 {
         .as_millis() as u64
 }
 pub fn valid_timeout(s: Option<u64>) -> bool {
-    s.is_none_or(|seconds| (60..=86_400).contains(&seconds))
+    match s {
+        None => true,
+        Some(seconds) => (60..=86_400).contains(&seconds),
+    }
 }
 impl AppStore {
     pub fn load(app: &AppHandle) -> Result<Self, String> {
@@ -412,10 +415,12 @@ mod tests {
     #[test]
     fn local_preferences_are_atomically_persisted_and_validated() {
         let store = scratch_store();
-        let mut prefs = Preferences::default();
-        prefs.theme = "dark".into();
-        prefs.wake_mode = WakeMode::Both;
-        prefs.timeout_seconds = Some(3600);
+        let mut prefs = Preferences {
+            theme: "dark".into(),
+            wake_mode: WakeMode::Both,
+            timeout_seconds: Some(3600),
+            ..Preferences::default()
+        };
         let result = store.change_preferences(prefs.clone()).unwrap();
         assert_eq!(result.preferences.theme, "dark");
         let raw = std::fs::read_to_string(&store.path).unwrap();

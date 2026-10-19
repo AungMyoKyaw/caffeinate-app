@@ -137,13 +137,13 @@ fn spawn_assertion(args: &[String]) -> Result<Child, String> {
     #[cfg(test)]
     {
         let _ = args;
-        return Command::new("/bin/sleep")
+        Command::new("/bin/sleep")
             .arg("30")
             .stdin(Stdio::null())
             .stdout(Stdio::null())
             .stderr(Stdio::null())
             .spawn()
-            .map_err(|e| format!("Cannot spawn test child: {e}"));
+            .map_err(|e| format!("Cannot spawn test child: {e}"))
     }
     #[cfg(all(not(test), target_os = "macos"))]
     {

@@ -40,7 +40,7 @@ fn change_session_option(
     let store = app.state::<AppStore>();
     let status = controller.status()?;
     let snapshot = store.snapshot()?;
-    let mode = selected_mode.unwrap_or_else(|| {
+    let mode = selected_mode.unwrap_or({
         if status.active {
             status.wake_mode
         } else {
