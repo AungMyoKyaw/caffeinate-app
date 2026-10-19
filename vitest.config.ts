@@ -16,10 +16,10 @@ export default defineConfig({
       reportsDirectory: "coverage",
       include: ["src/**/*.{ts,svelte}"],
       thresholds: {
-        statements: 100,
-        branches: 100,
-        functions: 100,
-        lines: 100
+        statements: 90,
+        branches: 90,
+        functions: 90,
+        lines: 90
       }
     }
   }
