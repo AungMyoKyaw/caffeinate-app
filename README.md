@@ -8,7 +8,7 @@
 
 A quiet, local-first macOS app for keeping your Mac awake while your work finishes.
 
-[Website preview](website/) · [Published releases](https://github.com/AungMyoKyaw/caffeinate-app/releases) · [Report an issue](https://github.com/AungMyoKyaw/caffeinate-app/issues)
+[Website preview](website/) · [Product video (Remotion)](marketing/remotion/) · [Published releases](https://github.com/AungMyoKyaw/caffeinate-app/releases) · [Report an issue](https://github.com/AungMyoKyaw/caffeinate-app/issues)
 
 **Caffeinate 3.0.0-beta.0 · In development · macOS 12+**
 

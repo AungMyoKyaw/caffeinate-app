@@ -1,0 +1,26 @@
+{
+  "name": "caffeinate-remotion-video",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts CaffeinateProduct out/caffeinate-product-1080p.mp4 --codec=h264 --crf=16 --concurrency=6 --browser-executable=\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\"",
+    "still": "remotion still src/index.ts CaffeinateProduct out/preview.png --frame=384 --browser-executable=\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\"",
+    "typecheck": "tsc --noEmit",
+    "capture": "node recording/capture.mjs"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.536",
+    "@remotion/media": "^4.0.536",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "remotion": "^4.0.536"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "playwright": "^1.64.1",
+    "typescript": "^7.0.2"
+  }
+}
