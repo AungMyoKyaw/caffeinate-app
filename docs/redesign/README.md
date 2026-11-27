@@ -27,7 +27,7 @@
 
 On macOS:
 
-    open /Users/aungmyokyaw/Code/mcp-workspace/projects/caffeinate-app/docs/redesign/PROTOTYPES.html
+    open docs/redesign/PROTOTYPES.html
 
 These are **planning and design mockups only**: they do not call Tauri commands, keep the Mac awake, schedule actions or update real preferences.
 
